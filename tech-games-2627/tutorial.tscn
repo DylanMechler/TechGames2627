@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cy1lrq45bqwgw"]
+
+[ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://player.tscn" id="1_7n6eb"]
+
+[node name="Tutorial" type="Node" unique_id=246610595]
+
+[node name="Background" type="ColorRect" parent="." unique_id=749042293]
+offset_right = 576.0
+offset_bottom = 324.0
+
+[node name="Player" parent="." unique_id=732282252 instance=ExtResource("1_7n6eb")]
