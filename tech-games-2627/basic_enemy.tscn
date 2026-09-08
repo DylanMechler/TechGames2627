@@ -1,22 +1,35 @@
 [gd_scene format=3 uid="uid://cp0no8p4onuid"]
 
-[ext_resource type="Script" uid="uid://cc2tjvmuygjm6" path="res://basic_enemy.gd" id="1_naotq"]
+[ext_resource type="Script" uid="uid://cnek0xrqb0pwf" path="res://basic_enemy.gd" id="1_naotq"]
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="2_rwafm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_naotq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3p0h"]
+size = Vector2(20.350319, 20)
 
-[node name="BasicEnemy" type="CharacterBody2D" unique_id=1498987459]
-position = Vector2(581, 294)
+[sub_resource type="CircleShape2D" id="CircleShape2D_unl08"]
+radius = 269.0
+
+[node name="BasicEnemy" type="Area2D" unique_id=992191196]
 script = ExtResource("1_naotq")
+metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1363204167]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1396268579]
 texture = ExtResource("2_rwafm")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=45575530]
-scale = Vector2(6.4000006, 6.4000006)
-shape = SubResource("RectangleShape2D_naotq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066398689]
+position = Vector2(-0.099998474, 0)
+scale = Vector2(6.28, 6.44)
+shape = SubResource("RectangleShape2D_d3p0h")
 
-[node name="Timer" type="Timer" parent="." unique_id=522314906]
-wait_time = 2.0
+[node name="Timer" type="Timer" parent="." unique_id=590012356]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=789346226]
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=889423478]
+
+[node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=799164481]
+shape = SubResource("CircleShape2D_unl08")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
