@@ -13,6 +13,28 @@ animations = [{
 "texture": ExtResource("1_4flbx")
 }],
 "loop": 1,
+"name": &"heavy_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4flbx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_4flbx")
+}],
+"loop": 1,
+"name": &"light_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4flbx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_4flbx")
+}],
+"loop": 1,
 "name": &"walk",
 "speed": 5.0
 }]
@@ -24,11 +46,17 @@ size = Vector2(64, 64)
 script = ExtResource("1_onrkg")
 metadata/_edit_group_ = true
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1747838063]
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=1747838063]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1898497444]
+[node name="PlayerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1898497444]
 sprite_frames = SubResource("SpriteFrames_7brjq")
-animation = &"walk"
+animation = &"heavy_attack"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1694269210]
+[node name="PlayerCollisionArea" type="CollisionShape2D" parent="." unique_id=1694269210]
 shape = SubResource("RectangleShape2D_7brjq")
+
+[node name="MeleeAttackTimer" type="Timer" parent="." unique_id=330294157]
+wait_time = 0.75
+autostart = true
+
+[connection signal="timeout" from="MeleeAttackTimer" to="." method="_on_melee_attack_timer_timeout"]
