@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cryle7orr7sea"]
+
+[ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://player.tscn" id="1_po0ka"]
+[ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_v1wow"]
+
+[node name="GameScene" type="Node" unique_id=957564006]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1075344325]
+offset_left = 144.0
+offset_top = 107.0
+offset_right = 331.0
+offset_bottom = 282.0
+color = Color(0.5039635, 0.9883061, 0.9141851, 1)
+
+[node name="Player" parent="." unique_id=732282252 instance=ExtResource("1_po0ka")]
+position = Vector2(236, 193)
+
+[node name="BasicEnemy" parent="." unique_id=992191196 instance=ExtResource("2_v1wow")]
+position = Vector2(1035, 272)
+
+[connection signal="area_entered" from="Player" to="BasicEnemy" method="_on_player_area_entered"]
+[connection signal="area_exited" from="Player" to="BasicEnemy" method="_on_player_area_exited"]
+[connection signal="player_position" from="Player" to="BasicEnemy" method="_on_player_player_position"]
+[connection signal="player_hit" from="BasicEnemy" to="Player" method="_on_basic_enemy_player_hit"]
