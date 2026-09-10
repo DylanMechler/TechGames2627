@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cf4c1yda1gmyh"]
+
+[ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="1_al265"]
+[ext_resource type="Script" uid="uid://bj61vheh8w0bh" path="res://chara_select_scene.gd" id="1_ank64"]
+
+[node name="CharaSelectScene" type="Node" unique_id=267006659]
+script = ExtResource("1_ank64")
+
+[node name="Label" type="Label" parent="." unique_id=1012990811]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Select a Character"
+
+[node name="OptionButton" type="OptionButton" parent="." unique_id=461642650]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.5
+offset_top = -68.0
+offset_right = 101.5
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+item_count = 1
+popup/item_0/text = "Guy"
+popup/item_0/icon = ExtResource("1_al265")
+popup/item_0/id = 0
+
+[node name="ConfirmButton" type="Button" parent="." unique_id=787378223]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -31.0
+offset_right = 73.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Confirm Selection"
+
+[connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
