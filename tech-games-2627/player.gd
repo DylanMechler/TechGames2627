@@ -2,6 +2,7 @@ extends Area2D
 
 signal PlayerLightMeleeAttack
 signal PlayerHeavyMeleeAttack
+signal player_position(position)
 
 @export var speed = 200
 @export var damage = 10
@@ -35,6 +36,7 @@ func _process(delta):
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	player_position.emit(position)
 	
 	if velocity.x != 0:
 		$PlayerAnimatedSprite.animation = "walk"
@@ -56,3 +58,7 @@ func _process(delta):
 
 func _on_melee_attack_timer_timeout():
 	attackReady = true
+
+
+func _on_basic_enemy_player_hit() -> void:
+	print("hit")
