@@ -26,6 +26,7 @@ shape = SubResource("RectangleShape2D_d3p0h")
 [node name="AttackTimer" type="Timer" parent="." unique_id=789346226]
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=889423478]
+collision_mask = 2
 
 [node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=799164481]
 shape = SubResource("CircleShape2D_unl08")
@@ -33,3 +34,4 @@ shape = SubResource("CircleShape2D_unl08")
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]

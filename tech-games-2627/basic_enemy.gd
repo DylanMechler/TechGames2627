@@ -6,11 +6,11 @@ var screen_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
 var player_detect = false
-@export var speed = 200
+@export var speed = 150
 @export var damage = 5
 @export var health = 30
 
-
+ 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
@@ -21,22 +21,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	print("player_detect: ", player_detect, " | player_pos: ", player_position, " | enemy_pos: ", position)
 	var velocity = movement_direction 
 	if player_detect:
-		if player_position.y > position.y:
-			velocity.y += 1
-		if player_position.y < position.y:
-			velocity.y -= 1
-		if player_position.x > position.x:
-			velocity.x += 1
-		if player_position.x < position.x:
-			velocity.x -= 1
+		velocity = (player_position - position).normalized() * speed
 		if velocity.length() > 0:
 			velocity = velocity.normalized() * speed
 		position += velocity * delta
 		position = position.clamp(Vector2.ZERO, screen_size)
-	else:
-		choose_new_direction()
 
 
 func choose_new_direction() -> void:
@@ -53,6 +45,7 @@ func _on_timer_timeout() -> void:
 
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
+	print("ENTERED! Detected: ", area.name)
 	player_detect = true
 
 
@@ -71,3 +64,8 @@ func _on_player_area_exited(body: Node2D) -> void:
 
 func _on_attack_timer_timeout() -> void:
 	player_hit.emit()
+
+
+func _on_detection_area_area_exited(area: Area2D) -> void:
+	print("EXITED! Lost: ", area.name)
+	player_detect = false
