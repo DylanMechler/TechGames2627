@@ -18,6 +18,7 @@ position = Vector2(236, 193)
 [node name="BasicEnemy" parent="." unique_id=992191196 instance=ExtResource("2_v1wow")]
 position = Vector2(1035, 272)
 
+[connection signal="PlayerMeleeAttack" from="Player" to="BasicEnemy" method="_on_player_player_melee_attack"]
 [connection signal="area_entered" from="Player" to="BasicEnemy" method="_on_player_area_entered"]
 [connection signal="area_exited" from="Player" to="BasicEnemy" method="_on_player_area_exited"]
 [connection signal="player_position" from="Player" to="BasicEnemy" method="_on_player_player_position"]

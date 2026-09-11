@@ -3,6 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bqfj2xqr3lo2t" path="res://player.gd" id="1_onrkg"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1glom"]
+size = Vector2(192, 256)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
 animations = [{
 "frames": [{
@@ -40,13 +43,21 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(64, 64)
+size = Vector2(112, 112)
 
 [node name="Player" type="Area2D" unique_id=732282252]
 script = ExtResource("1_onrkg")
 metadata/_edit_group_ = true
 
 [node name="PlayerCamera" type="Camera2D" parent="." unique_id=1747838063]
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=599019725]
+position = Vector2(192, 0)
+metadata/_edit_group_ = true
+
+[node name="AttackCollisionArea" type="CollisionShape2D" parent="AttackArea" unique_id=1608292817]
+position = Vector2(-96, 0)
+shape = SubResource("RectangleShape2D_1glom")
 
 [node name="PlayerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1898497444]
 sprite_frames = SubResource("SpriteFrames_7brjq")

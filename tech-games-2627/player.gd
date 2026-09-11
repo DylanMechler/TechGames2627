@@ -1,13 +1,15 @@
 extends Area2D
 
-signal PlayerLightMeleeAttack
-signal PlayerHeavyMeleeAttack
+signal PlayerMeleeAttack(damage)
 signal player_position(position)
 
 @export var speed = 200
-@export var damage = 10
 @export var health = 100
+@export var heavy_damage = 20
+@export var light_damage = 10
 @export var meleeAttackSpeed = 0.75
+var horizontal_flip = false # Sets to true if player is facing left
+var damage = 10
 var attackReady = true
 var screen_size # Size of the game window
 
@@ -21,8 +23,14 @@ func _process(delta):
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
+		if horizontal_flip:
+			$AttackArea.position.x += 192
+		horizontal_flip = false
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
+		if !horizontal_flip:
+			$AttackArea.position.x -= 192
+		horizontal_flip = true
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
@@ -44,16 +52,21 @@ func _process(delta):
 	
 	if attackReady:
 		if Input.is_action_pressed("light_attack"):
-			PlayerLightMeleeAttack.emit()
+			damage = light_damage
+			PlayerMeleeAttack.emit(damage)
 			print("Light Attack")
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	if attackReady:
 		if Input.is_action_pressed("heavy_attack"):
-			PlayerHeavyMeleeAttack.emit()
+			damage = heavy_damage
+			PlayerMeleeAttack.emit(damage)
 			print("Heavy Attack")
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
+	
+	if health <= 0:
+		queue_free()
 
 
 func _on_melee_attack_timer_timeout():
