@@ -21,14 +21,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print("player_detect: ", player_detect, " | player_pos: ", player_position, " | enemy_pos: ", position)
-	var velocity = movement_direction 
+	var velocity = Vector2.ZERO
 	if player_detect:
 		velocity = (player_position - position).normalized() * speed
-		if velocity.length() > 0:
-			velocity = velocity.normalized() * speed
-		position += velocity * delta
-		position = position.clamp(Vector2.ZERO, screen_size)
+	else:
+		velocity = movement_direction * speed
+	
+	position += velocity * delta
+	position = position.clamp(Vector2.ZERO, screen_size)
 
 
 func choose_new_direction() -> void:
@@ -54,12 +54,6 @@ func _on_player_player_position(position: Variant) -> void:
 	player_position.x = position.x
 	
 
-func _on_player_area_entered(body: Node2D) -> void:
-	timer2.start()
-
-
-func _on_player_area_exited(body: Node2D) -> void:
-	timer2.stop()
 
 
 func _on_attack_timer_timeout() -> void:
@@ -69,3 +63,13 @@ func _on_attack_timer_timeout() -> void:
 func _on_detection_area_area_exited(area: Area2D) -> void:
 	print("EXITED! Lost: ", area.name)
 	player_detect = false
+
+
+func _on_area_entered(area: Area2D) -> void:
+	print("ATTACK START! BasicEnemy body touched: ", area.name, " | Is it DetectionArea? ", area.name == "DetectionArea")
+	timer2.start()
+
+
+func _on_area_exited(area: Area2D) -> void:
+	print("ATTACK STOP! BasicEnemy body left: ", area.name)
+	timer2.stop()

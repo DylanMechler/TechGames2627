@@ -19,7 +19,7 @@ collision_layer = 2
 [node name="BasicEnemy" parent="." unique_id=992191196 instance=ExtResource("2_v1wow")]
 position = Vector2(1035, 272)
 
-[connection signal="area_entered" from="Player" to="BasicEnemy" method="_on_player_area_entered"]
-[connection signal="area_exited" from="Player" to="BasicEnemy" method="_on_player_area_exited"]
 [connection signal="player_position" from="Player" to="BasicEnemy" method="_on_player_player_position"]
+[connection signal="area_entered" from="BasicEnemy" to="BasicEnemy" method="_on_area_entered"]
+[connection signal="area_exited" from="BasicEnemy" to="BasicEnemy" method="_on_area_exited"]
 [connection signal="player_hit" from="BasicEnemy" to="Player" method="_on_basic_enemy_player_hit"]

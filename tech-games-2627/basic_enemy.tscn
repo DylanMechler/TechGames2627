@@ -10,6 +10,7 @@ size = Vector2(20.350319, 20)
 radius = 269.0
 
 [node name="BasicEnemy" type="Area2D" unique_id=992191196]
+collision_mask = 2
 script = ExtResource("1_naotq")
 metadata/_edit_group_ = true
 
