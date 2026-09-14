@@ -1,7 +1,7 @@
 extends Area2D
 @onready var timer: Timer = $Timer
 @onready var timer2: Timer = $AttackTimer
-signal player_hit
+signal player_hit(damage)
 var screen_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
@@ -29,6 +29,9 @@ func _process(delta: float) -> void:
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	if health <= 0:
+		queue_free()
 
 
 func choose_new_direction() -> void:
@@ -45,7 +48,6 @@ func _on_timer_timeout() -> void:
 
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
-	print("ENTERED! Detected: ", area.name)
 	player_detect = true
 
 
@@ -57,19 +59,20 @@ func _on_player_player_position(position: Variant) -> void:
 
 
 func _on_attack_timer_timeout() -> void:
-	player_hit.emit()
+		player_hit.emit(damage)
 
 
 func _on_detection_area_area_exited(area: Area2D) -> void:
-	print("EXITED! Lost: ", area.name)
 	player_detect = false
 
 
 func _on_area_entered(area: Area2D) -> void:
-	print("ATTACK START! BasicEnemy body touched: ", area.name, " | Is it DetectionArea? ", area.name == "DetectionArea")
 	timer2.start()
 
 
 func _on_area_exited(area: Area2D) -> void:
-	print("ATTACK STOP! BasicEnemy body left: ", area.name)
 	timer2.stop()
+
+
+func _on_player_player_melee_attack(damage: Variant) -> void:
+	health -= damage

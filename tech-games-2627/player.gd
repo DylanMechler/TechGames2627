@@ -1,8 +1,17 @@
 extends Area2D
+
+signal PlayerMeleeAttack(damage)
 signal player_position(position)
+
 @export var speed = 200
-@export var damage = 10
 @export var health = 100
+@export var heavy_damage = 20
+@export var light_damage = 10
+@export var meleeAttackSpeed = 0.75
+var horizontal_flip = false # Sets to true if player is facing left
+var damage = 10
+var attackReady = true
+var enemy_in_range = false
 var screen_size # Size of the game window
 
 # Called when the node enters the scene tree for the first time.
@@ -15,8 +24,14 @@ func _process(delta):
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
+		if horizontal_flip:
+			$AttackArea.position.x += 192
+		horizontal_flip = false
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
+		if !horizontal_flip:
+			$AttackArea.position.x -= 192
+		horizontal_flip = true
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
 	if Input.is_action_pressed("move_up"):
@@ -24,18 +39,50 @@ func _process(delta):
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
-		$AnimatedSprite2D.play()
+		$PlayerAnimatedSprite.play()
 	else:
-		$AnimatedSprite2D.stop()
+		$PlayerAnimatedSprite.stop()
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 	player_position.emit(position)
 	
 	if velocity.x != 0:
-		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.flip_h = velocity.x < 0
+		$PlayerAnimatedSprite.animation = "walk"
+		$PlayerAnimatedSprite.flip_h = velocity.x < 0
+	
+	if attackReady:
+		if Input.is_action_pressed("light_attack"):
+			damage = light_damage
+			print("Light Attack")
+			if enemy_in_range:
+				PlayerMeleeAttack.emit(damage)
+			attackReady = false
+			$MeleeAttackTimer.start(meleeAttackSpeed)
+	if attackReady:
+		if Input.is_action_pressed("heavy_attack"):
+			damage = heavy_damage
+			print("Heavy Attack")
+			if enemy_in_range:
+				PlayerMeleeAttack.emit(damage)
+			attackReady = false
+			$MeleeAttackTimer.start(meleeAttackSpeed)
+	
+	if health <= 0:
+		queue_free()
+
+
+func _on_melee_attack_timer_timeout():
+	attackReady = true
 
 
 func _on_basic_enemy_player_hit() -> void:
 	print("hit")
+
+
+func _on_attack_area_area_entered(area: Area2D) -> void:
+	enemy_in_range = true
+
+
+func _on_attack_area_area_exited(area: Area2D) -> void:
+	enemy_in_range = false
