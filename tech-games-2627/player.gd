@@ -11,6 +11,7 @@ signal player_position(position)
 var horizontal_flip = false # Sets to true if player is facing left
 var damage = 10
 var attackReady = true
+var enemy_in_range = false
 var screen_size # Size of the game window
 
 # Called when the node enters the scene tree for the first time.
@@ -53,15 +54,17 @@ func _process(delta):
 	if attackReady:
 		if Input.is_action_pressed("light_attack"):
 			damage = light_damage
-			PlayerMeleeAttack.emit(damage)
 			print("Light Attack")
+			if enemy_in_range:
+				PlayerMeleeAttack.emit(damage)
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	if attackReady:
 		if Input.is_action_pressed("heavy_attack"):
 			damage = heavy_damage
-			PlayerMeleeAttack.emit(damage)
 			print("Heavy Attack")
+			if enemy_in_range:
+				PlayerMeleeAttack.emit(damage)
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	
@@ -75,3 +78,11 @@ func _on_melee_attack_timer_timeout():
 
 func _on_basic_enemy_player_hit() -> void:
 	print("hit")
+
+
+func _on_attack_area_area_entered(area: Area2D) -> void:
+	enemy_in_range = true
+
+
+func _on_attack_area_area_exited(area: Area2D) -> void:
+	enemy_in_range = false
