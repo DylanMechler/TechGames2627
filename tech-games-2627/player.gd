@@ -74,8 +74,8 @@ func _process(delta):
 		get_tree().root.add_child(game_over)
 		queue_free()
 
-func _on_basic_enemy_player_hit() -> void:
-	health -= 5
+func _on_basic_enemy_player_hit(damage) -> void:
+	health -= damage
 	print("Health: ", health)
 
 func _on_melee_attack_timer_timeout():
