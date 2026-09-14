@@ -86,3 +86,8 @@ func _on_attack_area_area_entered(area: Area2D) -> void:
 
 func _on_attack_area_area_exited(area: Area2D) -> void:
 	enemy_in_range = false
+
+
+func _on_game_scene_player_attacked(damage):
+	print("hit")
+	health -= damage
