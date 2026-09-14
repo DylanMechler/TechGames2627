@@ -13,8 +13,10 @@ func _process(delta: float) -> void:
 
 
 func _on_restart_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().root.add_child(GAME_SCENE)
+	queue_free()
 
 
 func _on_main_menu_button_pressed() -> void:
-	pass # Replace with function body.
+	get_tree().root.add_child(MAIN_MENU_SCENE)
+	queue_free()
