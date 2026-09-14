@@ -13,7 +13,7 @@ var damage = 10
 var attackReady = true
 var enemy_in_range = false
 var screen_size # Size of the game window
-var GAME_OVER_SCENE = preload("res://game_over_scene.tscn").instantiate()
+const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -70,7 +70,8 @@ func _process(delta):
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	
 	if health <= 0:
-		get_tree().root.add_child(GAME_OVER_SCENE)
+		var game_over = GAME_OVER_SCENE.instantiate()
+		get_tree().root.add_child(game_over)
 		queue_free()
 
 func _on_basic_enemy_player_hit() -> void:

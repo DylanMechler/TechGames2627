@@ -3,7 +3,7 @@ extends Node
 @onready var confirm_button: Button = $ConfirmButton
 var chara_saved_index: int = 1
 var chara_saved_text: String = ""
-var GAME_SCENE = preload("res://game_scene.tscn").instantiate()
+const GAME_SCENE = preload("res://game_scene.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -23,5 +23,6 @@ func _on_confirm_button_pressed() -> void:
 		print("No Selection!")
 	else:
 		print("Selected Character: ", chara_saved_index, " ", chara_saved_text)
-		get_tree().root.add_child(GAME_SCENE)
+		var game_scene = GAME_SCENE.instantiate()
+		get_tree().root.add_child(game_scene)
 		queue_free()
