@@ -4,6 +4,7 @@ signal player_position(position)
 @export var damage = 10
 @export var health = 100
 var screen_size # Size of the game window
+var GAME_OVER_SCENE = preload("res://game_over_scene.tscn").instantiate()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,7 +36,10 @@ func _process(delta):
 	if velocity.x != 0:
 		$AnimatedSprite2D.animation = "walk"
 		$AnimatedSprite2D.flip_h = velocity.x < 0
-
+	if health <= 0:
+		get_tree().root.add_child(GAME_OVER_SCENE)
+		queue_free()
 
 func _on_basic_enemy_player_hit() -> void:
-	print("hit")
+	health -= 5
+	print("Health: ", health)

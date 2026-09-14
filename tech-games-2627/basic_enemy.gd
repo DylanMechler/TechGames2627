@@ -45,7 +45,6 @@ func _on_timer_timeout() -> void:
 
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
-	print("ENTERED! Detected: ", area.name)
 	player_detect = true
 
 
@@ -61,15 +60,12 @@ func _on_attack_timer_timeout() -> void:
 
 
 func _on_detection_area_area_exited(area: Area2D) -> void:
-	print("EXITED! Lost: ", area.name)
 	player_detect = false
 
 
 func _on_area_entered(area: Area2D) -> void:
-	print("ATTACK START! BasicEnemy body touched: ", area.name, " | Is it DetectionArea? ", area.name == "DetectionArea")
 	timer2.start()
 
 
 func _on_area_exited(area: Area2D) -> void:
-	print("ATTACK STOP! BasicEnemy body left: ", area.name)
 	timer2.stop()
