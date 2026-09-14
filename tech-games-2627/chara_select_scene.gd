@@ -23,6 +23,6 @@ func _on_confirm_button_pressed() -> void:
 		print("No Selection!")
 	else:
 		print("Selected Character: ", chara_saved_index, " ", chara_saved_text)
-		var new_scene = GAME_SCENE.instantiate()
-		get_tree().root.add_child(new_scene)
+		var game_scene = GAME_SCENE.instantiate()
+		get_tree().root.add_child(game_scene)
 		queue_free()

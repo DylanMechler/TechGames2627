@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://cxxjb0mhb1wop"]
+
+[ext_resource type="Script" uid="uid://cby036k8j1bxn" path="res://game_over_scene.gd" id="1_bm5fa"]
+
+[node name="GameOverScene" type="CanvasLayer" unique_id=1166841578]
+script = ExtResource("1_bm5fa")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1183128411]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.019607844, 0, 0.18039216, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1060585357]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -266.0
+offset_top = -102.5
+offset_right = 266.0
+offset_bottom = 102.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 75
+alignment = 1
+
+[node name="RestartButton" type="Button" parent="VBoxContainer" unique_id=289259621]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Restart Game"
+
+[node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=335053824]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Return to the Main Menu"
+
+[node name="Label" type="Label" parent="." unique_id=2014793972]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -46.0
+offset_right = 46.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Game Over!"
+
+[node name="TipLabel" type="Label" parent="." unique_id=1213500621]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.5
+offset_top = -28.0
+offset_right = 180.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "Tip: Try using WASD to move around. "
+
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
