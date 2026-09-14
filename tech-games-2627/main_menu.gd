@@ -1,6 +1,6 @@
 extends Node
 
-var tutorial_scene = preload("res://tutorial.tscn").instantiate()
+const tutorial_scene = preload("res://tutorial.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,7 +13,8 @@ func _process(delta):
 
 
 func _on_tutorial_button_pressed():
-	get_tree().root.add_child(tutorial_scene) # Add the tutorial scene
+	var tutorial = tutorial_scene.instantiate()
+	get_tree().root.add_child(tutorial) # Add the tutorial scene
 	queue_free() # Delete the main menu scene
 
 
