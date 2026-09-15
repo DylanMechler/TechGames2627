@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cxxjb0mhb1wop"]
 
 [ext_resource type="Script" uid="uid://cby036k8j1bxn" path="res://game_over_scene.gd" id="1_bm5fa"]
+[ext_resource type="Script" uid="uid://bdvrbju2hfjli" path="res://restart_button.gd" id="2_c4ct6"]
 
 [node name="GameOverScene" type="CanvasLayer" unique_id=1166841578]
 script = ExtResource("1_bm5fa")
@@ -32,6 +33,7 @@ alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Restart Game"
+script = ExtResource("2_c4ct6")
 
 [node name="MainMenuButton" type="Button" parent="VBoxContainer" unique_id=335053824]
 layout_mode = 2

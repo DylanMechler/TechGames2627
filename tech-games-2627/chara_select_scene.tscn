@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="1_al265"]
 [ext_resource type="Script" uid="uid://bj61vheh8w0bh" path="res://chara_select_scene.gd" id="1_ank64"]
+[ext_resource type="Script" uid="uid://cd5dyeibj43jg" path="res://option_button.gd" id="3_5kfhc"]
 
 [node name="CharaSelectScene" type="Node" unique_id=267006659]
 script = ExtResource("1_ank64")
@@ -29,10 +30,12 @@ offset_right = 101.5
 offset_bottom = 68.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_bottom = NodePath("../ConfirmButton")
 item_count = 1
 popup/item_0/text = "Guy"
 popup/item_0/icon = ExtResource("1_al265")
 popup/item_0/id = 0
+script = ExtResource("3_5kfhc")
 
 [node name="ConfirmButton" type="Button" parent="." unique_id=787378223]
 anchors_preset = 7
@@ -45,6 +48,7 @@ offset_top = -31.0
 offset_right = 73.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_neighbor_top = NodePath("../OptionButton")
 text = "Confirm Selection"
 
 [connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]

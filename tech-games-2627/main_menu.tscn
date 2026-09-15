@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bpejleiu67r6r"]
 
 [ext_resource type="Script" uid="uid://dfh5nau3i5mqr" path="res://main_menu.gd" id="1_06t4h"]
+[ext_resource type="Script" uid="uid://cyicj81phrrqe" path="res://continue_button.gd" id="2_7vrkn"]
 
 [node name="MainMenu" type="Node" unique_id=243109686]
 script = ExtResource("1_06t4h")
@@ -28,6 +29,7 @@ alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Continue Game"
+script = ExtResource("2_7vrkn")
 
 [node name="NewGameButton" type="Button" parent="MainMenuContainer" unique_id=1095924291]
 layout_mode = 2
