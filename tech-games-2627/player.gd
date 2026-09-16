@@ -5,7 +5,8 @@ signal player_position(position)
 signal player_death
 
 @export var speed = 400
-@export var health = 100
+@export var max_health: float = 100
+@export var health: float = 100
 @export var heavy_damage = 20
 @export var light_damage = 10
 @export var meleeAttackSpeed = 0.75
@@ -14,6 +15,7 @@ var damage = 10
 var attackReady = true
 var enemy_in_range = false
 var in_range_enemies = []
+var health_bar_length = 440
 var screen_size # Size of the game window
 
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +25,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	$HUD/HealthBar/CurrentHealth.size.x = health_bar_length * (health / max_health)
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
