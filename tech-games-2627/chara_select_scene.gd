@@ -7,16 +7,16 @@ const GAME_SCENE = preload("res://game_scene.tscn")
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready():
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta):
 	pass
 
 
-func _on_confirm_button_pressed() -> void:
+func _on_confirm_button_pressed():
 	chara_saved_index = option_button.selected
 	chara_saved_text = option_button.get_item_text(chara_saved_index)
 	if chara_saved_index == -1:

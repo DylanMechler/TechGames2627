@@ -1,9 +1,10 @@
 extends Area2D
 
-signal PlayerMeleeAttack(damage)
+signal PlayerMeleeAttack(enemies, damage)
 signal player_position(position)
+signal player_death
 
-@export var speed = 200
+@export var speed = 400
 @export var health = 100
 @export var heavy_damage = 20
 @export var light_damage = 10
@@ -12,8 +13,8 @@ var horizontal_flip = false # Sets to true if player is facing left
 var damage = 10
 var attackReady = true
 var enemy_in_range = false
+var in_range_enemies = []
 var screen_size # Size of the game window
-const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -57,7 +58,7 @@ func _process(delta):
 			damage = light_damage
 			print("Light Attack")
 			if enemy_in_range:
-				PlayerMeleeAttack.emit(damage)
+				PlayerMeleeAttack.emit(in_range_enemies, damage)
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	if attackReady:
@@ -65,31 +66,28 @@ func _process(delta):
 			damage = heavy_damage
 			print("Heavy Attack")
 			if enemy_in_range:
-				PlayerMeleeAttack.emit(damage)
+				PlayerMeleeAttack.emit(in_range_enemies, damage)
 			attackReady = false
 			$MeleeAttackTimer.start(meleeAttackSpeed)
 	
 	if health <= 0:
-		var game_over = GAME_OVER_SCENE.instantiate()
-		get_tree().root.add_child(game_over)
-		queue_free()
+		player_death.emit()
 
-func _on_basic_enemy_player_hit(damage) -> void:
-	health -= damage
-	print("Health: ", health)
 
 func _on_melee_attack_timer_timeout():
 	attackReady = true
 
 
-func _on_attack_area_area_entered(area: Area2D) -> void:
+func _on_attack_area_area_entered(area):
 	enemy_in_range = true
+	in_range_enemies.append(area)
 
 
-func _on_attack_area_area_exited(area: Area2D) -> void:
+func _on_attack_area_area_exited(area):
 	enemy_in_range = false
+	in_range_enemies.erase(area)
 
 
-func _on_game_scene_player_attacked(damage):
-	print("hit")
-	health -= damage
+func _on_game_scene_player_attacked(attack_damage):
+	health -= attack_damage
+	print("Health: ", health)
