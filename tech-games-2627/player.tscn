@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bqfj2xqr3lo2t" path="res://player.gd" id="1_onrkg"]
+[ext_resource type="PackedScene" uid="uid://dhcddedt8fst2" path="res://hud.tscn" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1glom"]
 size = Vector2(144, 256)
@@ -78,6 +79,8 @@ shape = SubResource("RectangleShape2D_7brjq")
 [node name="MeleeAttackTimer" type="Timer" parent="." unique_id=330294157]
 wait_time = 0.75
 autostart = true
+
+[node name="HUD" parent="." unique_id=733575946 instance=ExtResource("3_i3pqv")]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
