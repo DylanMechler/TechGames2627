@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://player.tscn" id="1_7n6eb"]
 
 [node name="Tutorial" type="Node" unique_id=246610595]
+process_mode = 1
 
 [node name="Background" type="ColorRect" parent="." unique_id=749042293]
 offset_left = 464.0

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_v1wow"]
 
 [node name="GameScene" type="Node" unique_id=957564006]
+process_mode = 1
 script = ExtResource("1_v1wow")
 basic_enemy_scene = ExtResource("2_v1wow")
 
