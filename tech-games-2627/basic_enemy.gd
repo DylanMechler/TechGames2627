@@ -12,7 +12,7 @@ var player_detect = false
 
  
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready():
 	screen_size = get_viewport_rect().size
 	randomize()
 	timer.start()
@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta):
 	var velocity = Vector2.ZERO
 	if player_detect:
 		velocity = (player_position - position).normalized() * speed
@@ -34,45 +34,34 @@ func _process(delta: float) -> void:
 		queue_free()
 
 
-func choose_new_direction() -> void:
+func choose_new_direction():
 	var random_x = randf_range(-1.0, 1.0)
 	var random_y = randf_range(-1.0, 1.0)
 	movement_direction = Vector2(random_x, random_y).normalized()
 
 
 
-func _on_timer_timeout() -> void:
+func _on_timer_timeout():
 	if !player_detect:
 		choose_new_direction()
 	timer.wait_time = randf_range(1.5, 4.0)
 
 
-func _on_detection_area_area_entered(area: Area2D) -> void:
+func _on_detection_area_area_entered(_area):
 	player_detect = true
 
 
-func _on_player_player_position(position: Variant) -> void:
-	player_position.y = position.y
-	player_position.x = position.x
-	
-
-
-
-func _on_attack_timer_timeout() -> void:
+func _on_attack_timer_timeout():
 		player_hit.emit(damage)
 
 
-func _on_detection_area_area_exited(area: Area2D) -> void:
+func _on_detection_area_area_exited(_area):
 	player_detect = false
 
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area):
 	timer2.start()
 
 
-func _on_area_exited(area: Area2D) -> void:
+func _on_area_exited(_area):
 	timer2.stop()
-
-
-func _on_player_player_melee_attack(damage: Variant) -> void:
-	health -= damage
