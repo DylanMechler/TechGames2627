@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://io1jnnxxpo55"]
 
 [ext_resource type="Script" uid="uid://ddwwruhoubx2g" path="res://pause_menu_scene.gd" id="1_voco6"]
-[ext_resource type="Script" uid="uid://dofvj3n1nt4mh" path="res://resume_button.gd" id="2_7sxgf"]
 
 [node name="PauseMenuScene" type="CanvasLayer" unique_id=862291999]
 script = ExtResource("1_voco6")
@@ -32,7 +31,6 @@ theme_override_constants/separation = 50
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Resume"
-script = ExtResource("2_7sxgf")
 
 [node name="SaveButton" type="Button" parent="VBoxContainer" unique_id=2086952236]
 layout_mode = 2

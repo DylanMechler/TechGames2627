@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://player.tscn" id="1_po0ka"]
 [ext_resource type="Script" uid="uid://b0ngsbnapdky0" path="res://game_scene.gd" id="1_v1wow"]
 [ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_v1wow"]
+[ext_resource type="PackedScene" uid="uid://io1jnnxxpo55" path="res://pause_menu_scene.tscn" id="3_mixcd"]
 
 [node name="GameScene" type="Node" unique_id=957564006]
 process_mode = 1
@@ -18,6 +19,8 @@ color = Color(0.5039635, 0.9883061, 0.9141851, 1)
 
 [node name="Player" parent="." unique_id=732282252 instance=ExtResource("1_po0ka")]
 position = Vector2(236, 193)
+
+[node name="PauseMenuScene" parent="." unique_id=862291999 instance=ExtResource("3_mixcd")]
 
 [connection signal="player_attacked" from="." to="Player" method="_on_game_scene_player_attacked"]
 [connection signal="PlayerMeleeAttack" from="Player" to="." method="_on_player_player_melee_attack"]
