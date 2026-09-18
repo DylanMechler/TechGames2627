@@ -1,10 +1,8 @@
 extends CanvasLayer
 
 func _ready() -> void:
-	print("PauseMenuScene _ready() called - Instance ID: ", get_instance_id())
 	hide()
 	get_tree().paused = false
-	# Set to always process in code, so it gets set fresh each time
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(_delta: float) -> void:
@@ -18,7 +16,6 @@ func _process(_delta: float) -> void:
 			$VBoxContainer/ResumeButton.grab_focus()
 
 func _on_resume_button_pressed() -> void:
-	print("Resume pressed - Instance: ", get_instance_id())
 	get_tree().paused = false
 	hide()
 
@@ -29,6 +26,9 @@ func _on_settings_button_pressed() -> void:
 	print("Settings")
 
 func _on_main_menu_button_pressed() -> void:
-	print("Main menu pressed - Instance: ", get_instance_id())
 	get_tree().paused = false
+	
+	if get_tree().current_scene == null:
+		get_tree().current_scene = get_parent()
+	
 	get_tree().change_scene_to_file("res://main_menu.tscn")
