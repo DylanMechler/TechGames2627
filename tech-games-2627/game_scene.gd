@@ -41,8 +41,25 @@ func _on_player_player_melee_attack(in_range_enemies, player_damage):
 			if enemy_health <= 0:
 					loaded_enemies.erase(enemy)
 
+func _on_bullet_enemy_hit(hit_enemy, bullet_damage):
+	for enemy in loaded_enemies:
+		if hit_enemy == enemy:
+			enemy_health = enemy.health - bullet_damage
+			enemy.health -= bullet_damage
+			print("Enemy Health: ", enemy_health)
+			if enemy_health <= 0:
+					loaded_enemies.erase(enemy)
 
 func _on_player_player_death():
 	var game_over = GAME_OVER_SCENE.instantiate()
 	get_tree().root.add_child(game_over)
 	queue_free()
+
+
+func _on_player_shoot_blaster(Bullet, direction, location, bullet_damage):
+	var spawned_bullet = Bullet.instantiate()
+	add_child(spawned_bullet)
+	spawned_bullet.direction = direction
+	spawned_bullet.position = location
+	spawned_bullet.bullet_damage = bullet_damage
+	spawned_bullet.enemy_hit.connect(_on_bullet_enemy_hit)
