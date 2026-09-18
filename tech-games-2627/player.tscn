@@ -78,10 +78,21 @@ shape = SubResource("RectangleShape2D_7brjq")
 
 [node name="MeleeAttackTimer" type="Timer" parent="." unique_id=330294157]
 wait_time = 0.75
+one_shot = true
 autostart = true
+
+[node name="RangedAttackTimer" type="Timer" parent="." unique_id=917085866]
+one_shot = true
+autostart = true
+
+[node name="ReloadTimer" type="Timer" parent="." unique_id=300720442]
+wait_time = 1.5
+one_shot = true
 
 [node name="HUD" parent="." unique_id=733575946 instance=ExtResource("3_i3pqv")]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
 [connection signal="timeout" from="MeleeAttackTimer" to="." method="_on_melee_attack_timer_timeout"]
+[connection signal="timeout" from="RangedAttackTimer" to="." method="_on_ranged_attack_timer_timeout"]
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

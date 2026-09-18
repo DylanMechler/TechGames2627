@@ -22,3 +22,4 @@ position = Vector2(236, 193)
 [connection signal="PlayerMeleeAttack" from="Player" to="." method="_on_player_player_melee_attack"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_position" from="Player" to="." method="_on_player_player_position"]
+[connection signal="shoot_blaster" from="Player" to="." method="_on_player_shoot_blaster"]
