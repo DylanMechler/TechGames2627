@@ -96,22 +96,22 @@ func _process(delta):
 				$MeleeAttackTimer.start(meleeAttackSpeed)
 #------------------------------------------------------------------------------------- RANGED ATTACK
 	else:
-		if rangedAttackReady:
 			if Input.is_action_pressed("light_attack"): #LIGHT RANGED ATTACK
 				if weapon_ammo_count <= 0:
 					if !reloading:
 						$ReloadTimer.start(reloadSpeed)
 						print("Reloading...")
 						reloading = true
-				if !reloading:
-					damage = light_ranged_damage
-					print("Light Ranged Attack")
-					shoot_blaster.emit(Bullet, horizontal_flip, position, damage)
-					weapon_ammo_count -= 1
-					$HUD/AmmoCount.text = "Ammo: " + str(weapon_ammo_count) + "/" + str(max_weapon_ammo_count)
-					print(weapon_ammo_count)
-					rangedAttackReady = false
-					$RangedAttackTimer.start(rangedAttackSpeed)
+				if rangedAttackReady:
+					if !reloading:
+						damage = light_ranged_damage
+						print("Light Ranged Attack")
+						shoot_blaster.emit(Bullet, horizontal_flip, position, damage)
+						weapon_ammo_count -= 1
+						$HUD/AmmoCount.text = "Ammo: " + str(weapon_ammo_count) + "/" + str(max_weapon_ammo_count)
+						print(weapon_ammo_count)
+						rangedAttackReady = false
+						$RangedAttackTimer.start(rangedAttackSpeed)
 #-------------------------------------------------------------------------------
 			if Input.is_action_pressed("heavy_attack"): #HEAVY RANGED ATTACK
 				if weapon_ammo_count <= 0:
@@ -119,15 +119,16 @@ func _process(delta):
 						$ReloadTimer.start(reloadSpeed)
 						print("Reloading...")
 					reloading = true
-				if !reloading:
-					damage = heavy_ranged_damage
-					print("Heavy Ranged Attack")
-					shoot_blaster.emit(Bullet, horizontal_flip, position, damage)
-					weapon_ammo_count -= 1
-					$HUD/AmmoCount.text = "Ammo: " + str(weapon_ammo_count) + "/" + str(max_weapon_ammo_count)
-					print(weapon_ammo_count)
-					rangedAttackReady = false
-					$RangedAttackTimer.start(rangedAttackSpeed)
+				if rangedAttackReady:
+					if !reloading:
+						damage = heavy_ranged_damage
+						print("Heavy Ranged Attack")
+						shoot_blaster.emit(Bullet, horizontal_flip, position, damage)
+						weapon_ammo_count -= 1
+						$HUD/AmmoCount.text = "Ammo: " + str(weapon_ammo_count) + "/" + str(max_weapon_ammo_count)
+						print(weapon_ammo_count)
+						rangedAttackReady = false
+						$RangedAttackTimer.start(rangedAttackSpeed)
 	
 	if health <= 0:
 		player_death.emit()
