@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://cy1lrq45bqwgw"]
 
 [ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://player.tscn" id="1_7n6eb"]
+[ext_resource type="PackedScene" uid="uid://io1jnnxxpo55" path="res://pause_menu_scene.tscn" id="2_yb1ct"]
 
 [node name="Tutorial" type="Node" unique_id=246610595]
+process_mode = 1
 
 [node name="Background" type="ColorRect" parent="." unique_id=749042293]
 offset_left = 464.0
@@ -10,3 +12,5 @@ offset_right = 1040.0
 offset_bottom = 324.0
 
 [node name="Player" parent="." unique_id=732282252 instance=ExtResource("1_7n6eb")]
+
+[node name="PauseMenuScene" parent="." unique_id=862291999 instance=ExtResource("2_yb1ct")]
