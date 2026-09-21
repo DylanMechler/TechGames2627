@@ -4,11 +4,13 @@
 [ext_resource type="Script" uid="uid://b0ngsbnapdky0" path="res://game_scene.gd" id="1_v1wow"]
 [ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_v1wow"]
 [ext_resource type="PackedScene" uid="uid://io1jnnxxpo55" path="res://pause_menu_scene.tscn" id="3_mixcd"]
+[ext_resource type="PackedScene" uid="uid://08v4eh81ktak" path="res://ranged_enemy.tscn" id="3_mj2jn"]
 
 [node name="GameScene" type="Node" unique_id=957564006]
 process_mode = 1
 script = ExtResource("1_v1wow")
 basic_enemy_scene = ExtResource("2_v1wow")
+ranged_enemy_scene = ExtResource("3_mj2jn")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1075344325]
 offset_left = 144.0

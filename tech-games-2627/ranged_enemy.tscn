@@ -23,6 +23,7 @@ shape = SubResource("RectangleShape2D_7brjq")
 [node name="RoamTimer" type="Timer" parent="." unique_id=2028027959]
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=553805834]
+wait_time = 1.5
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=296915144]
 collision_layer = 0

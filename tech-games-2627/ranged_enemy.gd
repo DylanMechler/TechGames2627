@@ -1,11 +1,12 @@
 extends Area2D
-@onready var roam_timer: Timer = $Timer
+@onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
 signal player_hit(damage)
 var screen_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
 var player_detect = false
+var enemy_direction = 1 # 1 if player is to the right of the enemy, -1 if the player is to the left of the enemy
 @export var speed = 150
 @export var damage = 5
 @export var health = 30
@@ -22,6 +23,10 @@ func _process(delta):
 	var velocity = Vector2.ZERO
 	if player_detect:
 		velocity = (player_position - position).normalized() * speed
+		if player_position.x < position.x:
+			enemy_direction = -1
+		else:
+			enemy_direction = 1
 	else:
 		velocity = movement_direction * speed
 	
