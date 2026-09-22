@@ -7,7 +7,10 @@
 size = Vector2(128, 128)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kexd4"]
-radius = 269.0
+radius = 995.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7brjq"]
+radius = 688.0
 
 [node name="ranged_enemy" type="Area2D" unique_id=419293718]
 collision_layer = 4
@@ -32,9 +35,16 @@ collision_mask = 2
 [node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=309146019]
 shape = SubResource("CircleShape2D_kexd4")
 
-[connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[node name="AttackArea" type="Area2D" parent="." unique_id=596701846]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596036738]
+shape = SubResource("CircleShape2D_7brjq")
+
 [connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
