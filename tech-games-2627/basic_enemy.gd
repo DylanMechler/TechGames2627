@@ -5,6 +5,7 @@ signal player_hit(damage)
 var screen_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
+var enemy_direction = 1
 var player_detect = false
 @export var speed = 150
 @export var damage = 5
@@ -27,8 +28,18 @@ func _process(delta):
 	else:
 		velocity = movement_direction * speed
 	
+	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	if velocity.x < 0:
+		if enemy_direction == 1:
+			$AttackArea.position.x -= position.x - 192
+		enemy_direction = -1
+	elif velocity.x > 0:
+		if enemy_direction == -1:
+			$AttackArea.position.x += 192
+		enemy_direction = 1
 	
 	if health <= 0:
 		queue_free()

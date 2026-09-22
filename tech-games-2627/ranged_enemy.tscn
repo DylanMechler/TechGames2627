@@ -16,6 +16,7 @@ radius = 688.0
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_ln3ug")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=273278852]
 texture = ExtResource("1_kexd4")
@@ -31,6 +32,7 @@ wait_time = 1.5
 [node name="DetectionArea" type="Area2D" parent="." unique_id=296915144]
 collision_layer = 0
 collision_mask = 2
+metadata/_edit_group_ = true
 
 [node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=309146019]
 shape = SubResource("CircleShape2D_kexd4")
@@ -38,6 +40,7 @@ shape = SubResource("CircleShape2D_kexd4")
 [node name="AttackArea" type="Area2D" parent="." unique_id=596701846]
 collision_layer = 0
 collision_mask = 2
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596036738]
 shape = SubResource("CircleShape2D_7brjq")

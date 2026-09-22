@@ -50,11 +50,9 @@ func _process(delta):
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():
 			attack_timer.start()
-			print("RANGED ATTACK TIMER STARTED")
 	else:
 		if !attack_timer.is_stopped():
 			attack_timer.stop()
-			print("RANGED ATTACK TIMER STOPPED")
 	
 	if health <= 0:
 		queue_free()
@@ -79,7 +77,6 @@ func _on_detection_area_area_entered(_area):
 
 func _on_attack_timer_timeout():
 		ranged_attack.emit(Bullet, enemy_direction, position, damage)
-		print("RANGED ENEMY ATTACK")
 
 
 func _on_detection_area_area_exited(_area):
@@ -88,9 +85,7 @@ func _on_detection_area_area_exited(_area):
 
 func _on_attack_area_area_entered(_area):
 	player_attackable = true
-	print("RANGED ENEMY CAN ATTACK")
 
 
 func _on_attack_area_area_exited(_area):
 	player_attackable = false
-	print("RANGED ENEMY CAN'T ATTACK")
