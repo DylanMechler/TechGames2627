@@ -5,7 +5,7 @@ signal player_attacked(damage)
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
-var enemies = [[500, 500, "ranged"], [200, 200, "melee"]]
+var enemies = [[500, 500, "melee"], [200, 200, "melee"]]
 var loaded_enemies = []
 var enemy_health
 
@@ -17,16 +17,20 @@ func _ready():
 		match enemy[2]:
 			"melee":
 				new_enemy = basic_enemy_scene.instantiate()
-				print("MELEE")
 				new_enemy.player_hit.connect(_on_enemy_player_hit)
 			"ranged":
 				new_enemy = ranged_enemy_scene.instantiate()
-				print("RANGED")
 				new_enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
 		new_enemy.position.x = enemy[0]
 		new_enemy.position.y = enemy[1]
 		add_child(new_enemy)
 		loaded_enemies.append(new_enemy)
+	
+	for enemy in loaded_enemies:
+		for collidable_enemy in loaded_enemies:
+			if enemy != collidable_enemy:
+				enemy.collidables.append(collidable_enemy.get_node("CollisionShape2D"))
+		enemy.collidables.append($Player.get_node("PlayerCollisionArea"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

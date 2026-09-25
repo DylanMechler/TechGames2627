@@ -43,12 +43,12 @@ func _process(delta):
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 		if horizontal_flip == -1:
-			$AttackArea.position.x += 192
+			$AttackArea.position.x += 144
 		horizontal_flip = 1
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
 		if horizontal_flip == 1:
-			$AttackArea.position.x -= 192
+			$AttackArea.position.x -= 144
 		horizontal_flip = -1
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1

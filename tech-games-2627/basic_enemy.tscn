@@ -14,21 +14,19 @@ radius = 269.0
 
 [node name="BasicEnemy" type="Area2D" unique_id=992191196]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 0
 script = ExtResource("1_naotq")
+metadata/_edit_group_ = true
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1889533916]
-position = Vector2(192, 0)
+position = Vector2(144, 0)
+collision_layer = 0
+collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1196350978]
 position = Vector2(-72, 0)
 shape = SubResource("RectangleShape2D_7brjq")
-
-[node name="Sprite2D" type="Sprite2D" parent="AttackArea" unique_id=20691559]
-position = Vector2(-71.99999, 0)
-scale = Vector2(1.1249999, 1.9999999)
-texture = ExtResource("2_rwafm")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1396268579]
 texture = ExtResource("2_rwafm")
@@ -38,7 +36,7 @@ position = Vector2(-0.099998474, 0)
 scale = Vector2(6.28, 6.44)
 shape = SubResource("RectangleShape2D_d3p0h")
 
-[node name="Timer" type="Timer" parent="." unique_id=590012356]
+[node name="RoamTimer" type="Timer" parent="." unique_id=590012356]
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=789346226]
 
@@ -53,7 +51,9 @@ shape = SubResource("CircleShape2D_unl08")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
+[connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]

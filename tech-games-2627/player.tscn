@@ -44,7 +44,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(112, 112)
+size = Vector2(128, 128)
 
 [node name="Player" type="Area2D" unique_id=732282252]
 collision_layer = 2
@@ -55,7 +55,7 @@ metadata/_edit_group_ = true
 [node name="PlayerCamera" type="Camera2D" parent="." unique_id=1747838063]
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=599019725]
-position = Vector2(192, 0)
+position = Vector2(144, 0)
 collision_layer = 0
 collision_mask = 4
 metadata/_edit_group_ = true
