@@ -9,6 +9,10 @@ var enemy_direction = 1
 var player_detect = false
 var attack_started = false
 var collidables = []
+var collision_area
+var collision_size_X
+var collision_size_Y
+var tile_size = 32
 @export var speed = 150
 @export var damage = 5
 @export var health = 30
@@ -19,6 +23,9 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	randomize()
 	roam_timer.start()
+	collision_area = $CollisionShape2D
+	collision_size_X = collision_area.get_shape().get_rect().size.x / 2
+	collision_size_Y = collision_area.get_shape().get_rect().size.y / 2
 
 
 
@@ -39,21 +46,38 @@ func _process(delta):
 			$AttackArea.position.x += 144
 			enemy_direction = 1
 	
+	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
+	
 	for collidable in collidables:
-		if collidable.get_shape().get_rect().intersects($CollisionShape2D.get_shape().get_rect()):
-			print("INTERSECTS")
-			var intersection_rect = collidable.get_shape().get_rect().intersection($CollisionShape2D.get_shape().get_rect())
-			if collidable.position.x > position.x:
-				position.x -= intersection_rect.size.x
-			else:
-				position.x += intersection_rect.size.x
-			if collidable.position.y > position.y:
-				position.y -= intersection_rect.size.y
-			else:
-				position.y += intersection_rect.size.y
+		# REPLACE COLLISION SIZE X WITH TILE SIZE (DON"T FORGET TO DO THE SAME FOR THE PLAYER SCENE)
+		
+		print("X0: ", collision_size_X)
+		print("X1: ", position.x - collision_size_X)
+		print("X2: ", collidable.position.x + collidable.collision_size_X)
+		print("X3: ", (position.x - collision_size_X) < (collidable.position.x + collidable.collision_size_X))
+		print("X4: ", (position.x + collision_size_X) > (collidable.position.x - collidable.collision_size_X))
+		if enemy_direction == -1:
+			if (position.x - collision_size_X) < (collidable.position.x + collidable.collision_size_X):
+				position.x = collidable.position.x + collidable.collision_size_X
+		elif enemy_direction == 1:
+			if (position.x + collision_size_X) > (collidable.position.x - collidable.collision_size_X):
+				position.x = collidable.position.x - collidable.collision_size_X
+		
+		print("Y0: ", collision_size_Y)
+		print("Y1: ", position.y - collision_size_Y)
+		print("Y2: ", collidable.position.y + collidable.collision_size_Y)
+		print("Y3: ", (position.y - collision_size_Y) < (collidable.position.y + collidable.collision_size_Y))
+		print("Y4: ", (position.y + collision_size_Y) > (collidable.position.y - collidable.collision_size_Y))
+		if enemy_direction == -1:
+			if (position.y - collision_size_Y) < (collidable.position.y + collidable.collision_size_Y):
+				position.y = collidable.position.y + collidable.collision_size_Y
+		elif enemy_direction == 1:
+			if (position.y + collision_size_Y) > (collidable.position.y - collidable.collision_size_Y):
+				position.y = collidable.position.y - collidable.collision_size_Y
+	
 	
 	if health <= 0:
 		queue_free()

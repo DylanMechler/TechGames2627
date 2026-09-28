@@ -29,11 +29,17 @@ var rangedAttackReady = true
 var enemy_in_range = false
 var in_range_enemies = []
 var health_bar_length = 440
+var collision_area
+var collision_size_X
+var collision_size_Y
 var screen_size # Size of the game window
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
+	collision_area = $PlayerCollisionArea
+	collision_size_X = collision_area.get_shape().get_rect().size.x / 2
+	collision_size_Y = collision_area.get_shape().get_rect().size.y / 2
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
