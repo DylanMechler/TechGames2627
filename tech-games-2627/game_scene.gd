@@ -2,31 +2,29 @@ extends Node
 
 signal player_attacked(damage)
 
+@export var available_levels: Array[PackedScene]
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
-var enemies = [[500, 500, "ranged"], [200, 200, "melee"]]
 var loaded_enemies = []
 var enemy_health
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var random_level = available_levels.pick_random()
+	var level_instance = random_level.instantiate()
+	add_child(level_instance)
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	
 	for enemy in enemies:
-		var new_enemy
-		match enemy[2]:
-			"melee":
-				new_enemy = basic_enemy_scene.instantiate()
-				print("MELEE")
-				new_enemy.player_hit.connect(_on_enemy_player_hit)
-			"ranged":
-				new_enemy = ranged_enemy_scene.instantiate()
-				print("RANGED")
-				new_enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
-		new_enemy.position.x = enemy[0]
-		new_enemy.position.y = enemy[1]
-		add_child(new_enemy)
-		loaded_enemies.append(new_enemy)
+		if enemy.has_signal("player_hit"):
+			enemy.player_hit.connect(_on_enemy_player_hit)
+	
+	# Connect ranged_attack if it exists (ranged enemies)
+		if enemy.has_signal("ranged_attack"):
+			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
+		loaded_enemies.append(enemy)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
