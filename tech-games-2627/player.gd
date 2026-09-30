@@ -162,3 +162,6 @@ func _on_reload_timer_timeout():
 	weapon_ammo_count = max_weapon_ammo_count
 	$HUD/AmmoCount.text = "Ammo: " + str(weapon_ammo_count) + "/" + str(max_weapon_ammo_count)
 	print("Weapon Reloaded")
+	
+func _on_game_scene_level_count_changed(count):
+	$HUD/LevelLabel.text = "Levels Completed: " + str(count)

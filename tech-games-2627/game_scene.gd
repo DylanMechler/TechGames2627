@@ -1,6 +1,7 @@
 extends Node
 
 signal player_attacked(damage)
+signal level_count_changed(count)
 
 @export var available_levels: Array[PackedScene]
 @export var basic_enemy_scene: PackedScene
@@ -93,6 +94,7 @@ func _on_player_shoot_blaster(Bullet, direction, location, bullet_damage):
 
 func _on_level_clear():
 	levels_completed += 1 
+	level_count_changed.emit(levels_completed)
 	var level_clear = LEVEL_CLEAR_SCENE.instantiate()
 	add_child(level_clear)  
 	get_tree().paused = true 
