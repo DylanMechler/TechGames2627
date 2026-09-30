@@ -5,7 +5,7 @@ signal player_attacked(damage)
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
-var enemies = [[500, 500, "melee"]]
+var enemies = [[500, 500, "melee"], [200, 200, "melee"]]
 var loaded_enemies = []
 var enemy_health
 
@@ -27,9 +27,6 @@ func _ready():
 		loaded_enemies.append(new_enemy)
 	
 	for enemy in loaded_enemies:
-		for collidable_enemy in loaded_enemies:
-			if enemy != collidable_enemy:
-				enemy.collidables.append(collidable_enemy)
 		enemy.collidables.append($Player)
 
 

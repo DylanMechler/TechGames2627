@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cp0no8p4onuid"]
 
-[ext_resource type="Script" uid="uid://cnek0xrqb0pwf" path="res://basic_enemy.gd" id="1_naotq"]
+[ext_resource type="Script" uid="uid://cnek0xrqb0pwf" path="res://basic_enemy.gd" id="1_rwafm"]
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="2_rwafm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(144, 256)
+size = Vector2(80, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3p0h"]
-size = Vector2(20.382164, 19.875774)
+size = Vector2(10.191082, 9.937887)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_unl08"]
 radius = 269.0
@@ -15,23 +15,25 @@ radius = 269.0
 [node name="BasicEnemy" type="Area2D" unique_id=992191196]
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_naotq")
+script = ExtResource("1_rwafm")
 metadata/_edit_group_ = true
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=1889533916]
-position = Vector2(144, 0)
+position = Vector2(80, 0)
 collision_layer = 0
 collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1196350978]
-position = Vector2(-72, 0)
+position = Vector2(-40, 0)
 shape = SubResource("RectangleShape2D_7brjq")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1396268579]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_rwafm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066398689]
+position = Vector2(1.9073486e-06, -5.722046e-06)
 scale = Vector2(6.28, 6.44)
 shape = SubResource("RectangleShape2D_d3p0h")
 

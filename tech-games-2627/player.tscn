@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dhcddedt8fst2" path="res://hud.tscn" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1glom"]
-size = Vector2(144, 256)
+size = Vector2(80, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
 animations = [{
@@ -44,32 +44,32 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(128, 128)
+size = Vector2(64, 64)
 
 [node name="Player" type="Area2D" unique_id=732282252]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_onrkg")
-metadata/_edit_group_ = true
 
 [node name="PlayerCamera" type="Camera2D" parent="." unique_id=1747838063]
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=599019725]
-position = Vector2(144, 0)
+position = Vector2(80, 0)
 collision_layer = 0
 collision_mask = 4
 metadata/_edit_group_ = true
 
 [node name="AttackCollisionArea" type="CollisionShape2D" parent="AttackArea" unique_id=1608292817]
-position = Vector2(-72, 0)
+position = Vector2(-40, 0)
 shape = SubResource("RectangleShape2D_1glom")
 
 [node name="Sprite2D" type="Sprite2D" parent="AttackArea" unique_id=81597996]
-position = Vector2(-71.999985, -0.9999962)
-scale = Vector2(1.1250002, 2.015625)
+position = Vector2(-39.999996, 7.6293945e-06)
+scale = Vector2(0.625, 1)
 texture = ExtResource("1_4flbx")
 
 [node name="PlayerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1898497444]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 animation = &"heavy_attack"
 

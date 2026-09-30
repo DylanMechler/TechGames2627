@@ -30,16 +30,13 @@ var enemy_in_range = false
 var in_range_enemies = []
 var health_bar_length = 440
 var collision_area
-var collision_size_X
-var collision_size_Y
+var tile_size = 64
 var screen_size # Size of the game window
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
 	collision_area = $PlayerCollisionArea
-	collision_size_X = collision_area.get_shape().get_rect().size.x / 2
-	collision_size_Y = collision_area.get_shape().get_rect().size.y / 2
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,12 +46,12 @@ func _process(delta):
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
 		if horizontal_flip == -1:
-			$AttackArea.position.x += 144
+			$AttackArea.position.x += 80
 		horizontal_flip = 1
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
 		if horizontal_flip == 1:
-			$AttackArea.position.x -= 144
+			$AttackArea.position.x -= 80
 		horizontal_flip = -1
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
