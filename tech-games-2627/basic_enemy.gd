@@ -9,7 +9,6 @@ var enemy_direction = 1
 var player_detect = false
 var attack_started = false
 var collidables = []
-var collision_area
 var tile_size = 64
 @export var speed = 150
 @export var damage = 5
@@ -21,7 +20,6 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	randomize()
 	roam_timer.start()
-	collision_area = $CollisionShape2D
 
 
 
