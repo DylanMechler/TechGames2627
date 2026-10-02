@@ -34,3 +34,4 @@ position = Vector2(236, 193)
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_position" from="Player" to="." method="_on_player_player_position"]
 [connection signal="shoot_blaster" from="Player" to="." method="_on_player_shoot_blaster"]
+[connection signal="pause_change" from="PauseMenuScene" to="." method="_on_pause_menu_scene_pause_change"]

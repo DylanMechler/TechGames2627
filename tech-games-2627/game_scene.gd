@@ -98,6 +98,7 @@ func _on_level_clear():
 	level_count_changed.emit(levels_completed)
 	var level_clear = LEVEL_CLEAR_SCENE.instantiate()
 	add_child(level_clear)  
+	$Player.get_node("HUD").visible = false
 	get_tree().paused = true 
 	
 func load_next_level():
@@ -107,6 +108,15 @@ func load_next_level():
 		current_level.queue_free()
 		current_level = null
 	
+	$Player.get_node("HUD").visible = true
+	
 	await get_tree().process_frame
 	
 	load_random_level()  
+
+
+func _on_pause_menu_scene_pause_change(pause_state):
+	if pause_state:
+		$Player.get_node("HUD").visible = true
+	else:
+		$Player.get_node("HUD").visible = false
