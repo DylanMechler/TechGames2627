@@ -11,6 +11,8 @@ var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
 var player_detect = false
 var player_attackable = false
+var collidables = []
+var tile_size = 64
 var enemy_direction = 1 # 1 if player is to the right of the enemy, -1 if the player is to the left of the enemy
 @export var speed = 150
 @export var damage = 3
@@ -27,9 +29,9 @@ func _ready():
 func _process(delta):
 	var velocity = Vector2.ZERO
 	if player_detect:
-		if position.y < player_position.y:
+		if position.y < player_position.y - 2:
 			velocity.y += 1
-		elif position.y > player_position.y:
+		elif position.y > player_position.y + 2:
 			velocity.y -= 1
 		if !player_attackable:
 			if position.x < player_position.x:
@@ -42,6 +44,25 @@ func _process(delta):
 			enemy_direction = 1
 	else:
 		velocity = movement_direction * speed
+		if velocity.x < 0:
+			enemy_direction = -1
+		else:
+			enemy_direction = 1
+	
+	for collidable in collidables:
+		var check_position = position + (velocity * delta)
+		if ((check_position.x - (tile_size/2.0)) < (collidable.position.x + (collidable.tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) > (collidable.position.x - (collidable.tile_size/2.0))):
+			if (((check_position.y - (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0))) && ((check_position.y - (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0)))) || (((check_position.y + (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0))) && ((check_position.y + (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0)))):
+				velocity.x = 0
+	
+	
+	if enemy_direction == -1:
+		if (position.x - player_position.x) <= 250:
+			velocity.x += 1
+	elif enemy_direction == 1:
+		if (player_position.x - position.x) <= 250:
+			velocity.x -= 1
+	
 	
 	velocity = velocity.normalized() * speed
 	position += velocity * delta
@@ -50,11 +71,9 @@ func _process(delta):
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():
 			attack_timer.start()
-			print("RANGED ATTACK TIMER STARTED")
 	else:
 		if !attack_timer.is_stopped():
 			attack_timer.stop()
-			print("RANGED ATTACK TIMER STOPPED")
 	
 	if health <= 0:
 		queue_free()
@@ -79,7 +98,6 @@ func _on_detection_area_area_entered(_area):
 
 func _on_attack_timer_timeout():
 		ranged_attack.emit(Bullet, enemy_direction, position, damage)
-		print("RANGED ENEMY ATTACK")
 
 
 func _on_detection_area_area_exited(_area):
@@ -88,9 +106,7 @@ func _on_detection_area_area_exited(_area):
 
 func _on_attack_area_area_entered(_area):
 	player_attackable = true
-	print("RANGED ENEMY CAN ATTACK")
 
 
 func _on_attack_area_area_exited(_area):
 	player_attackable = false
-	print("RANGED ENEMY CAN'T ATTACK")

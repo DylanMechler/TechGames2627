@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://daxb1vdhx7v14" path="res://ranged_enemy.gd" id="1_ln3ug"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(128, 128)
+size = Vector2(64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kexd4"]
 radius = 995.0
@@ -16,8 +16,10 @@ radius = 688.0
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_ln3ug")
+metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=273278852]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_kexd4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886231368]
@@ -29,15 +31,19 @@ shape = SubResource("RectangleShape2D_7brjq")
 wait_time = 1.5
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=296915144]
+visible = false
 collision_layer = 0
 collision_mask = 2
+metadata/_edit_group_ = true
 
 [node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=309146019]
 shape = SubResource("CircleShape2D_kexd4")
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=596701846]
+visible = false
 collision_layer = 0
 collision_mask = 2
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596036738]
 shape = SubResource("CircleShape2D_7brjq")

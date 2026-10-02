@@ -25,6 +25,6 @@ func _process(delta):
 		queue_free()
 
 
-func _on_area_entered(area):
+func _on_area_entered(_area):
 	player_hit.emit(bullet_damage)
 	queue_free()

@@ -31,6 +31,7 @@ func load_random_level():
 			enemy.player_hit.connect(_on_enemy_player_hit)
 		if enemy.has_signal("ranged_attack"):
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
+		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
 
 
