@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cet4btvch461u" path="res://FirstTileSet.png" id="1_qvtxo"]
 [ext_resource type="Script" uid="uid://cnb74nce4guhe" path="res://level_blue.gd" id="1_v7qdr"]
 [ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_0lpq8"]
+[ext_resource type="PackedScene" uid="uid://08v4eh81ktak" path="res://ranged_enemy.tscn" id="3_3yin6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qvtxo"]
 texture = ExtResource("1_qvtxo")
@@ -19,6 +20,7 @@ sources/1 = SubResource("TileSetAtlasSource_qvtxo")
 [node name="LevelBlue" type="Node2D" unique_id=2014727971]
 script = ExtResource("1_v7qdr")
 basic_enemy_scene = ExtResource("2_0lpq8")
+ranged_enemy_scene = ExtResource("3_3yin6")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=654977924]
 position = Vector2(-12, -59)

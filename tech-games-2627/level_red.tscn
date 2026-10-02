@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://lpuavdoupn5w" path="res://level_red.gd" id="1_2clv8"]
 [ext_resource type="Texture2D" uid="uid://cet4btvch461u" path="res://FirstTileSet.png" id="1_mtetn"]
 [ext_resource type="PackedScene" uid="uid://08v4eh81ktak" path="res://ranged_enemy.tscn" id="2_31lga"]
+[ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://basic_enemy.tscn" id="2_uq46w"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2clv8"]
 texture = ExtResource("1_mtetn")
@@ -18,6 +19,7 @@ sources/0 = SubResource("TileSetAtlasSource_2clv8")
 
 [node name="LevelRed" type="Node2D" unique_id=686083354]
 script = ExtResource("1_2clv8")
+basic_enemy_scene = ExtResource("2_uq46w")
 ranged_enemy_scene = ExtResource("2_31lga")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1939473498]
