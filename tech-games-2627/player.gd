@@ -77,6 +77,7 @@ func _process(delta):
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
+
 	player_position.emit(position)
 	
 	if velocity.x != 0:

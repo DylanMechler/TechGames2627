@@ -66,7 +66,7 @@ func _process(delta):
 	
 	velocity = velocity.normalized() * speed
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, level_size * 2)
+	position = position.clamp(Vector2.ZERO, level_size)
 	
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():
