@@ -6,7 +6,7 @@ var Bullet = preload("res://enemy_bullet.tscn")
 
 @onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
-var screen_size
+var level_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
 var player_detect = false
@@ -20,7 +20,7 @@ var enemy_direction = 1 # 1 if player is to the right of the enemy, -1 if the pl
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size
+	level_size = get_viewport_rect().size * 2
 	randomize()
 	roam_timer.start()
 
@@ -66,7 +66,7 @@ func _process(delta):
 	
 	velocity = velocity.normalized() * speed
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size * 2)
+	position = position.clamp(Vector2.ZERO, level_size)
 	
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():

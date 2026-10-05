@@ -5,11 +5,11 @@ signal player_hit(bullet_damage)
 var bullet_speed = 750
 var direction = 1
 var bullet_damage = 0
-var screen_size
+var level_size
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size
+	level_size = get_viewport_rect().size * 2
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,7 +21,7 @@ func _process(delta):
 	position += velocity * delta
 	if position.x <= -1000:
 		queue_free()
-	if position.x >= (screen_size.x + 1000):
+	if position.x >= (level_size.x + 1000):
 		queue_free()
 
 
