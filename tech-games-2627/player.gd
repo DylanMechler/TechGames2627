@@ -72,7 +72,7 @@ func _process(delta):
 		$PlayerAnimatedSprite.stop()
 	
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
+	position = position.clamp(Vector2.ZERO, screen_size * 2)
 	player_position.emit(position)
 	
 	if velocity.x != 0:
