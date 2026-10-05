@@ -2,7 +2,7 @@ extends Node2D
 
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
-var enemies = [[500, 500, "melee"], [200, 200, "melee"]]
+var enemies = [[500, 500, "ranged"], [200, 200, "melee"], [350, 350, "ranged"], [800, 350, "melee"], [200, 500, "ranged"], [600, 350, "melee"]]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
