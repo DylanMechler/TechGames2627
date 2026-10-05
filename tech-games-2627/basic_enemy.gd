@@ -2,7 +2,7 @@ extends Area2D
 @onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
 signal player_hit(damage)
-var screen_size
+var level_size
 var movement_direction: Vector2 = Vector2.ZERO
 var player_position: Vector2 = Vector2.ZERO
 var enemy_direction = 1
@@ -17,7 +17,7 @@ var tile_size = 64
  
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size
+	level_size = get_viewport_rect().size * 2
 	randomize()
 	roam_timer.start()
 
@@ -54,7 +54,7 @@ func _process(delta):
 	
 	
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
+	position = position.clamp(Vector2.ZERO, level_size)
 	
 	
 	if health <= 0:

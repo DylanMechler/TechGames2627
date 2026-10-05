@@ -31,12 +31,16 @@ var in_range_enemies = []
 var health_bar_length = 440
 var collision_area
 var tile_size = 64
-var screen_size # Size of the game window
+var level_size # Size of level area
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size
+	level_size = get_viewport_rect().size * 2
 	collision_area = $PlayerCollisionArea
+	$PlayerCamera.limit_top = 0
+	$PlayerCamera.limit_left = 0
+	$PlayerCamera.limit_bottom = level_size.y
+	$PlayerCamera.limit_right = level_size.x
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -72,7 +76,7 @@ func _process(delta):
 		$PlayerAnimatedSprite.stop()
 	
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
+	position = position.clamp(Vector2.ZERO, level_size)
 	player_position.emit(position)
 	
 	if velocity.x != 0:

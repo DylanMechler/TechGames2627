@@ -52,6 +52,7 @@ collision_mask = 7
 script = ExtResource("1_onrkg")
 
 [node name="PlayerCamera" type="Camera2D" parent="." unique_id=1747838063]
+limit_smoothed = true
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=599019725]
 position = Vector2(80, 0)
