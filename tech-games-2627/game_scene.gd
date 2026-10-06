@@ -6,6 +6,7 @@ signal level_count_changed(count)
 @export var available_levels: Array[PackedScene]
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
+@export var mini_boss_brute_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
 const LEVEL_CLEAR_SCENE = preload("res://level_complete_scene.tscn")
 var loaded_enemies = []
@@ -62,7 +63,7 @@ func _on_player_player_melee_attack(in_range_enemies, player_damage):
 		if in_range_enemies.has(enemy):
 			enemy_health = enemy.health - player_damage
 			enemy.health -= player_damage
-			print("Enemy Health: ", enemy_health)
+			print("Enemy Health: ", enemy_health, " || Enemy: ", enemy)
 			if enemy_health <= 0:
 					loaded_enemies.erase(enemy)
 					if loaded_enemies.is_empty():

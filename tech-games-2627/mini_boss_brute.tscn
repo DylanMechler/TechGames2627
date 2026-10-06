@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://bqpvm7x4thjwi"]
+
+[ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="1_drixd"]
+[ext_resource type="Script" uid="uid://6mraull1kcw4" path="res://mini_boss_brute.gd" id="1_hyy45"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hyy45"]
+size = Vector2(160, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1gk3w"]
+size = Vector2(20.382164, 19.875774)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lv08p"]
+radius = 480.0
+
+[node name="MiniBoss_Brute" type="Area2D" unique_id=1755798384]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_hyy45")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=122549937]
+position = Vector2(160, 0)
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1961158454]
+position = Vector2(-80, 0)
+shape = SubResource("RectangleShape2D_hyy45")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1936958483]
+position = Vector2(1.9073486e-06, 1.9073486e-06)
+texture = ExtResource("1_drixd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622637482]
+position = Vector2(-9.536743e-07, 1.9073486e-06)
+scale = Vector2(6.28, 6.44)
+shape = SubResource("RectangleShape2D_1gk3w")
+
+[node name="RoamTimer" type="Timer" parent="." unique_id=2075157845]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1572553700]
+
+[node name="SlamTimer" type="Timer" parent="." unique_id=753197011]
+wait_time = 10.0
+
+[node name="ChargeTimer" type="Timer" parent="." unique_id=2115178882]
+wait_time = 10.0
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=2141140813]
+visible = false
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=725163082]
+shape = SubResource("CircleShape2D_lv08p")
+
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
+[connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]

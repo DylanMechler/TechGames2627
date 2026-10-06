@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ibtjvhvtmay6" path="res://level_brown.tscn" id="4_miq82"]
 [ext_resource type="PackedScene" uid="uid://c1efusbptcpah" path="res://level_black.tscn" id="5_j5hk1"]
 [ext_resource type="PackedScene" uid="uid://e412vgk88eef" path="res://level_mix.tscn" id="6_ueiaa"]
+[ext_resource type="PackedScene" uid="uid://bqpvm7x4thjwi" path="res://mini_boss_brute.tscn" id="9_j5hk1"]
 
 [node name="GameScene" type="Node" unique_id=957564006]
 process_mode = 1
@@ -17,6 +18,7 @@ script = ExtResource("1_v1wow")
 available_levels = Array[PackedScene]([ExtResource("2_kdryc"), ExtResource("3_6e45b"), ExtResource("4_miq82"), ExtResource("5_j5hk1"), ExtResource("6_ueiaa")])
 basic_enemy_scene = ExtResource("2_v1wow")
 ranged_enemy_scene = ExtResource("3_mj2jn")
+mini_boss_brute_scene = ExtResource("9_j5hk1")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1075344325]
 offset_left = 144.0
