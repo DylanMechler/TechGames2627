@@ -8,6 +8,7 @@ var player_position: Vector2 = Vector2.ZERO
 var enemy_direction = 1
 var player_detect = false
 var attack_started = false
+var attackable_area = "none" # none - player not attackable, slam - player in the slam damage area, normal - player in the normal attack area
 var collision_state = "normal" # normal collision is the same as basic enemy collision, charge collision is the collision used when the mini-boss is charging
 var collidables = []
 var tile_size = 128
@@ -74,6 +75,16 @@ func choose_new_direction():
 	movement_direction = Vector2(random_x, random_y).normalized()
 
 
+func choose_attack_type():
+		var attack_type = randi_range(1, 4) # 1:Slam, 2:Charge, 3:Normal
+		if attack_type == 1:
+			print("Slam Attack")
+		elif attack_type == 2:
+			print("Charge Attack")
+		elif attack_type == 3:
+			print("Normal Attack")
+			player_hit.emit(damage)
+
 
 func _on_roam_timer_timeout():
 	if !player_detect:
@@ -86,7 +97,7 @@ func _on_detection_area_area_entered(_area):
 
 
 func _on_attack_timer_timeout():
-		player_hit.emit(damage)
+	choose_attack_type()
 
 
 func _on_detection_area_area_exited(_area):

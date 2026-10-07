@@ -12,6 +12,9 @@ size = Vector2(20.382164, 19.875774)
 [sub_resource type="CircleShape2D" id="CircleShape2D_lv08p"]
 radius = 480.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_7brjq"]
+radius = 312.10254
+
 [node name="MiniBoss_Brute" type="Area2D" unique_id=1755798384]
 collision_layer = 4
 collision_mask = 0
@@ -46,14 +49,22 @@ wait_time = 10.0
 [node name="ChargeTimer" type="Timer" parent="." unique_id=2115178882]
 wait_time = 10.0
 
+[node name="AttackBuildUpTimer" type="Timer" parent="." unique_id=1225348721]
+wait_time = 1.5
+
 [node name="DetectionArea" type="Area2D" parent="." unique_id=2141140813]
-visible = false
 collision_layer = 0
 collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=725163082]
+visible = false
 shape = SubResource("CircleShape2D_lv08p")
+
+[node name="SlamDamageArea" type="Area2D" parent="." unique_id=1502491145]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlamDamageArea" unique_id=727586563]
+shape = SubResource("CircleShape2D_7brjq")
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
