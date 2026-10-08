@@ -1,6 +1,8 @@
 extends Area2D
 @onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
+@onready var special_attack_timer: Timer = $SpecialAttackTimer
+@onready var attack_build_up_timer: Timer = $AttackBuildUpTimer
 signal player_hit(damage)
 var level_size
 var movement_direction: Vector2 = Vector2.ZERO
@@ -8,13 +10,14 @@ var player_position: Vector2 = Vector2.ZERO
 var enemy_direction = 1
 var player_detect = false
 var attack_started = false
-var attackable_area = "none" # none - player not attackable, slam - player in the slam damage area, normal - player in the normal attack area
-var collision_state = "normal" # normal collision is the same as basic enemy collision, charge collision is the collision used when the mini-boss is charging
 var collidables = []
 var tile_size = 128
-var charge_distance
+var attack_type = "normal" # Sets the type of attack that will be used in the next attack. normal, slam, or charge
+var special_attack_ready = true
+var player_in_normal_area = false
+var player_in_slam_area = false
+var player_in_charge_area = false
 @export var speed = 125
-@export var charge_attack_speed = 175
 @export var damage = 10
 @export var health = 60
 
@@ -22,7 +25,6 @@ var charge_distance
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	level_size = get_viewport_rect().size * 2
-	charge_distance = get_viewport_rect().size.x
 	randomize()
 	roam_timer.start()
 
@@ -32,10 +34,7 @@ func _ready():
 func _process(delta):
 	var velocity = Vector2.ZERO
 	if player_detect:
-		if collision_state != "charge":
 			velocity = (player_position - position).normalized() * speed
-		elif collision_state == "charge":
-			velocity = (((position + (charge_distance * enemy_direction)) - position)).normalized() * charge_attack_speed
 	else:
 		velocity = movement_direction * speed
 	
@@ -76,14 +75,23 @@ func choose_new_direction():
 
 
 func choose_attack_type():
-		var attack_type = randi_range(1, 4) # 1:Slam, 2:Charge, 3:Normal
-		if attack_type == 1:
-			print("Slam Attack")
-		elif attack_type == 2:
-			print("Charge Attack")
-		elif attack_type == 3:
-			print("Normal Attack")
-			player_hit.emit(damage)
+	if special_attack_ready:
+		var rand_attack = randi_range(1, 2) # 1:Slam, 2:Charge
+		if rand_attack == 1:
+			print("Slam Attack Charging")
+			attack_type = "slam"
+			special_attack_ready = false
+			attack_build_up_timer.start()
+		elif rand_attack == 2:
+			print("Charge Attack Charging")
+			attack_type = "charge"
+			special_attack_ready = false
+			attack_build_up_timer.start()
+	else:
+		print("Normal Attack")
+		attack_type = "normal"
+		player_hit.emit(damage)
+		attack_timer.start()
 
 
 func _on_roam_timer_timeout():
@@ -113,3 +121,15 @@ func _on_attack_area_area_exited(_area):
 	if attack_started:
 		attack_timer.stop()
 		attack_started = false
+
+
+func _on_special_attack_timer_timeout():
+	special_attack_ready = true
+
+
+func _on_attack_build_up_timer_timeout():
+	special_attack_timer.start()
+	if attack_type == "slam":
+		print("SLAM ATTACK")
+	elif attack_type == "charge":
+		print("CHARGE ATTACK")

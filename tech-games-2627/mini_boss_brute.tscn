@@ -42,15 +42,15 @@ shape = SubResource("RectangleShape2D_1gk3w")
 [node name="RoamTimer" type="Timer" parent="." unique_id=2075157845]
 
 [node name="AttackTimer" type="Timer" parent="." unique_id=1572553700]
+one_shot = true
 
-[node name="SlamTimer" type="Timer" parent="." unique_id=753197011]
+[node name="SpecialAttackTimer" type="Timer" parent="." unique_id=753197011]
 wait_time = 10.0
-
-[node name="ChargeTimer" type="Timer" parent="." unique_id=2115178882]
-wait_time = 10.0
+one_shot = true
 
 [node name="AttackBuildUpTimer" type="Timer" parent="." unique_id=1225348721]
 wait_time = 1.5
+one_shot = true
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=2141140813]
 collision_layer = 0
@@ -70,5 +70,7 @@ shape = SubResource("CircleShape2D_7brjq")
 [connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
 [connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="SpecialAttackTimer" to="." method="_on_special_attack_timer_timeout"]
+[connection signal="timeout" from="AttackBuildUpTimer" to="." method="_on_attack_build_up_timer_timeout"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
