@@ -64,6 +64,11 @@ func _process(delta):
 	position = position.clamp(Vector2.ZERO, level_size)
 	
 	
+	if (player_in_normal_area || player_in_slam_area || player_in_charge_area) && !attack_started:
+		attack_timer.start()
+		attack_started = true
+	
+	
 	if health <= 0:
 		queue_free()
 
@@ -77,12 +82,12 @@ func choose_new_direction():
 func choose_attack_type():
 	if special_attack_ready:
 		var rand_attack = randi_range(1, 2) # 1:Slam, 2:Charge
-		if rand_attack == 1:
+		if (rand_attack == 1) && (player_in_slam_area):
 			print("Slam Attack Charging")
 			attack_type = "slam"
 			special_attack_ready = false
 			attack_build_up_timer.start()
-		elif rand_attack == 2:
+		elif (rand_attack == 2):
 			print("Charge Attack Charging")
 			attack_type = "charge"
 			special_attack_ready = false
@@ -91,7 +96,7 @@ func choose_attack_type():
 		print("Normal Attack")
 		attack_type = "normal"
 		player_hit.emit(damage)
-		attack_timer.start()
+		attack_started = false
 
 
 func _on_roam_timer_timeout():
@@ -113,14 +118,10 @@ func _on_detection_area_area_exited(_area):
 
 
 func _on_attack_area_area_entered(_area):
-	if !attack_started:
-		attack_timer.start()
-		attack_started = true
+	player_in_normal_area = true
 
 func _on_attack_area_area_exited(_area):
-	if attack_started:
-		attack_timer.stop()
-		attack_started = false
+	player_in_normal_area = false
 
 
 func _on_special_attack_timer_timeout():
@@ -128,8 +129,21 @@ func _on_special_attack_timer_timeout():
 
 
 func _on_attack_build_up_timer_timeout():
-	special_attack_timer.start()
 	if attack_type == "slam":
 		print("SLAM ATTACK")
+		attack_timer.start()
+		special_attack_timer.start()
+		attack_started = false
 	elif attack_type == "charge":
 		print("CHARGE ATTACK")
+		attack_timer.start()
+		special_attack_timer.start()
+		attack_started = false
+
+
+func _on_slam_damage_area_area_entered(_area):
+	player_in_slam_area = true
+
+
+func _on_slam_damage_area_area_exited(_area):
+	player_in_slam_area = false
