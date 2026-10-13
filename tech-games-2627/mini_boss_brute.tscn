@@ -19,6 +19,9 @@ radius = 312.10254
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_hyy45")
+speed = null
+damage = null
+health = null
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=122549937]
 position = Vector2(160, 0)
@@ -29,6 +32,11 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1961158454]
 position = Vector2(-80, 0)
 shape = SubResource("RectangleShape2D_hyy45")
+
+[node name="Sprite2D" type="Sprite2D" parent="AttackArea" unique_id=334957059]
+position = Vector2(-80, 3.8146973e-06)
+scale = Vector2(1.25, 2)
+texture = ExtResource("1_drixd")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1936958483]
 position = Vector2(1.9073486e-06, 1.9073486e-06)
@@ -62,6 +70,8 @@ visible = false
 shape = SubResource("CircleShape2D_lv08p")
 
 [node name="SlamDamageArea" type="Area2D" parent="." unique_id=1502491145]
+collision_layer = 0
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlamDamageArea" unique_id=727586563]
 shape = SubResource("CircleShape2D_7brjq")

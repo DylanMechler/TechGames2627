@@ -12,11 +12,17 @@ var player_detect = false
 var attack_started = false
 var collidables = []
 var tile_size = 128
+var player_tile_size = 64
 var attack_type = "normal" # Sets the type of attack that will be used in the next attack. normal, slam, or charge
 var special_attack_ready = true
 var player_in_normal_area = false
 var player_in_slam_area = false
 var player_in_charge_area = false
+var charge_hit_player = false
+var collision_type = "normal" # normal collision is the typical collision, charge collision is the collision for the charge attack
+var charge_distance
+var charge_starting_position # Only uses X value
+var charge_speed = 500
 @export var speed = 125
 @export var damage = 10
 @export var health = 60
@@ -25,6 +31,7 @@ var player_in_charge_area = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	level_size = get_viewport_rect().size * 2
+	charge_distance = get_viewport_rect().size.x
 	randomize()
 	roam_timer.start()
 
@@ -34,37 +41,62 @@ func _ready():
 func _process(delta):
 	var velocity = Vector2.ZERO
 	if player_detect:
+		if collision_type == "normal":
 			velocity = (player_position - position).normalized() * speed
+		elif collision_type == "charge" && ((position.x != (charge_starting_position - (charge_distance * enemy_direction))) && ((position.x != 0) && (position.x != level_size.x))):
+			velocity.x += (1 * charge_speed) * enemy_direction
+		elif collision_type == "charge" && ((position.x == (charge_starting_position - (charge_distance * enemy_direction))) || ((position.x == 0) || (position.x == level_size.x))):
+			collision_type = "normal"
+			attack_timer.start()
+			special_attack_timer.start()
+			attack_started = false
 	else:
 		velocity = movement_direction * speed
 	
-	if velocity.x < 0:
-		if enemy_direction == 1:
-			$AttackArea.position.x -= 160
-			enemy_direction = -1
-	elif velocity.x > 0:
-		if enemy_direction == -1:
-			$AttackArea.position.x += 160
-			enemy_direction = 1
+	if collision_type == "normal":
+		if velocity.x < 0:
+			if enemy_direction == 1:
+				$AttackArea.position.x -= 160
+				enemy_direction = -1
+		elif velocity.x > 0:
+			if enemy_direction == -1:
+				$AttackArea.position.x += 160
+				enemy_direction = 1
 	
 	
 	for collidable in collidables:
 		var check_position = position + (velocity * delta)
-		if ((check_position.x - (tile_size/2.0)) < (collidable.position.x + (collidable.tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) > (collidable.position.x - (collidable.tile_size/2.0))):
-			if (((check_position.y - (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0))) && ((check_position.y - (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0)))) || (((check_position.y + (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0))) && ((check_position.y + (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0)))):
-				velocity.x = 0
-		
-		
-		if ((check_position.y - (tile_size/2.0)) < (collidable.position.y + (collidable.tile_size/2.0))) && ((check_position.y + (tile_size/2.0)) > (collidable.position.y - (collidable.tile_size/2.0))):
-			if (((check_position.x - (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0))) && ((check_position.x - (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0)))) || (((check_position.x + (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0)))):
-				velocity.y = 0
+		if collision_type == "normal":
+			if ((check_position.x - (tile_size/2.0)) < (collidable.position.x + (collidable.tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) > (collidable.position.x - (collidable.tile_size/2.0))):
+				if (((check_position.y - (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0))) && ((check_position.y - (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0)))) || (((check_position.y + (tile_size/2.0)) <= (collidable.position.y + (tile_size/2.0))) && ((check_position.y + (tile_size/2.0)) >= (collidable.position.y - (tile_size/2.0)))):
+					velocity.x = 0
+			
+			
+			if ((check_position.y - (tile_size/2.0)) < (collidable.position.y + (collidable.tile_size/2.0))) && ((check_position.y + (tile_size/2.0)) > (collidable.position.y - (collidable.tile_size/2.0))):
+				if (((check_position.x - (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0))) && ((check_position.x - (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0)))) || (((check_position.x + (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0)))):
+					velocity.y = 0
 	
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
 	
 	
+	if collision_type == "charge":
+		if (player.x + (player_tile_size/2.0)) < (position.x - (tile_size/2.0))
+	
+	
+	if ((position.y + (tile_size/2.0) > player_position.y) && (position.y - (tile_size/2.0) < player_position.y)) && player_detect:
+		if !player_in_charge_area:
+			print("Mini-Boss Charge Attack Available")
+			player_in_charge_area = true
+	else:
+		if player_in_charge_area:
+			print("Mini-Boss Charge Attack Unavailable")
+			player_in_charge_area = false
+	
+	
 	if (player_in_normal_area || player_in_slam_area || player_in_charge_area) && !attack_started:
+		print("Mini-Boss Player Attackable")
 		attack_timer.start()
 		attack_started = true
 	
@@ -80,6 +112,7 @@ func choose_new_direction():
 
 
 func choose_attack_type():
+	print("Mini-Boss Choosing Attack Type")
 	if special_attack_ready:
 		var rand_attack = randi_range(1, 2) # 1:Slam, 2:Charge
 		if (rand_attack == 1) && (player_in_slam_area):
@@ -87,11 +120,14 @@ func choose_attack_type():
 			attack_type = "slam"
 			special_attack_ready = false
 			attack_build_up_timer.start()
-		elif (rand_attack == 2):
+		elif (rand_attack == 2) && (player_in_charge_area):
 			print("Charge Attack Charging")
 			attack_type = "charge"
+			charge_starting_position = position.x
 			special_attack_ready = false
 			attack_build_up_timer.start()
+		else:
+			attack_started = false
 	else:
 		print("Normal Attack")
 		attack_type = "normal"
@@ -106,44 +142,52 @@ func _on_roam_timer_timeout():
 
 
 func _on_detection_area_area_entered(_area):
+	print("Mini-Boss Found Player")
 	player_detect = true
 
 
 func _on_attack_timer_timeout():
+	print("Mini-Boss Attack Timer Complete")
 	choose_attack_type()
 
 
 func _on_detection_area_area_exited(_area):
+	print("Mini-Boss Lost Player")
 	player_detect = false
 
 
 func _on_attack_area_area_entered(_area):
+	print("Mini-Boss Normal Attack Available")
 	player_in_normal_area = true
 
 func _on_attack_area_area_exited(_area):
+	print("Mini-Boss Normal Attack Unavailable")
 	player_in_normal_area = false
 
 
 func _on_special_attack_timer_timeout():
+	print("Mini-Boss Special Attacks Ready")
 	special_attack_ready = true
 
 
 func _on_attack_build_up_timer_timeout():
+	print("Mini-Boss Attack Build-Up Complete")
 	if attack_type == "slam":
 		print("SLAM ATTACK")
+		player_hit.emit(damage * 2)
 		attack_timer.start()
 		special_attack_timer.start()
 		attack_started = false
 	elif attack_type == "charge":
 		print("CHARGE ATTACK")
-		attack_timer.start()
-		special_attack_timer.start()
-		attack_started = false
+		collision_type = "charge"
 
 
 func _on_slam_damage_area_area_entered(_area):
+	print("Mini-Boss Slam Attack Available")
 	player_in_slam_area = true
 
 
 func _on_slam_damage_area_area_exited(_area):
+	print("Mini-Boss Slam Attack Unavailable")
 	player_in_slam_area = false
