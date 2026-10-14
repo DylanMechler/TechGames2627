@@ -15,6 +15,7 @@ var tile_size = 128
 var player_tile_size = 64
 var attack_type = "normal" # Sets the type of attack that will be used in the next attack. normal, slam, or charge
 var special_attack_ready = true
+var special_attack_multiplier = 2
 var player_in_normal_area = false
 var player_in_slam_area = false
 var player_in_charge_area = false
@@ -50,6 +51,7 @@ func _process(delta):
 			attack_timer.start()
 			special_attack_timer.start()
 			attack_started = false
+			charge_hit_player = false
 	else:
 		velocity = movement_direction * speed
 	
@@ -82,21 +84,22 @@ func _process(delta):
 	
 	
 	if collision_type == "charge":
-		if (player.x + (player_tile_size/2.0)) < (position.x - (tile_size/2.0))
+		if ((player_position.x + (player_tile_size/2.0)) > (position.x - (tile_size/2.0))) && ((player_position.x - (player_tile_size/2.0)) < (position.x + (tile_size/2.0))):
+			if ((player_position.y + (player_tile_size/2.0)) > (position.y - (tile_size/2.0))) && ((player_position.y - (player_tile_size/2.0)) < (position.y + (tile_size/2.0))):
+				if !charge_hit_player:
+					player_hit.emit(damage * special_attack_multiplier)
+					charge_hit_player = true
 	
 	
 	if ((position.y + (tile_size/2.0) > player_position.y) && (position.y - (tile_size/2.0) < player_position.y)) && player_detect:
 		if !player_in_charge_area:
-			print("Mini-Boss Charge Attack Available")
 			player_in_charge_area = true
 	else:
 		if player_in_charge_area:
-			print("Mini-Boss Charge Attack Unavailable")
 			player_in_charge_area = false
 	
 	
 	if (player_in_normal_area || player_in_slam_area || player_in_charge_area) && !attack_started:
-		print("Mini-Boss Player Attackable")
 		attack_timer.start()
 		attack_started = true
 	
@@ -112,16 +115,13 @@ func choose_new_direction():
 
 
 func choose_attack_type():
-	print("Mini-Boss Choosing Attack Type")
 	if special_attack_ready:
 		var rand_attack = randi_range(1, 2) # 1:Slam, 2:Charge
 		if (rand_attack == 1) && (player_in_slam_area):
-			print("Slam Attack Charging")
 			attack_type = "slam"
 			special_attack_ready = false
 			attack_build_up_timer.start()
 		elif (rand_attack == 2) && (player_in_charge_area):
-			print("Charge Attack Charging")
 			attack_type = "charge"
 			charge_starting_position = position.x
 			special_attack_ready = false
@@ -129,7 +129,6 @@ func choose_attack_type():
 		else:
 			attack_started = false
 	else:
-		print("Normal Attack")
 		attack_type = "normal"
 		player_hit.emit(damage)
 		attack_started = false
@@ -142,52 +141,41 @@ func _on_roam_timer_timeout():
 
 
 func _on_detection_area_area_entered(_area):
-	print("Mini-Boss Found Player")
 	player_detect = true
 
 
 func _on_attack_timer_timeout():
-	print("Mini-Boss Attack Timer Complete")
 	choose_attack_type()
 
 
 func _on_detection_area_area_exited(_area):
-	print("Mini-Boss Lost Player")
 	player_detect = false
 
 
 func _on_attack_area_area_entered(_area):
-	print("Mini-Boss Normal Attack Available")
 	player_in_normal_area = true
 
 func _on_attack_area_area_exited(_area):
-	print("Mini-Boss Normal Attack Unavailable")
 	player_in_normal_area = false
 
 
 func _on_special_attack_timer_timeout():
-	print("Mini-Boss Special Attacks Ready")
 	special_attack_ready = true
 
 
 func _on_attack_build_up_timer_timeout():
-	print("Mini-Boss Attack Build-Up Complete")
 	if attack_type == "slam":
-		print("SLAM ATTACK")
-		player_hit.emit(damage * 2)
+		player_hit.emit(damage * special_attack_multiplier)
 		attack_timer.start()
 		special_attack_timer.start()
 		attack_started = false
 	elif attack_type == "charge":
-		print("CHARGE ATTACK")
 		collision_type = "charge"
 
 
 func _on_slam_damage_area_area_entered(_area):
-	print("Mini-Boss Slam Attack Available")
 	player_in_slam_area = true
 
 
 func _on_slam_damage_area_area_exited(_area):
-	print("Mini-Boss Slam Attack Unavailable")
 	player_in_slam_area = false

@@ -19,9 +19,6 @@ radius = 312.10254
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_hyy45")
-speed = null
-damage = null
-health = null
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=122549937]
 position = Vector2(160, 0)

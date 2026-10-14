@@ -16,6 +16,7 @@ func _ready() -> void:
 				new_enemy = ranged_enemy_scene.instantiate()
 			"brute":
 				new_enemy = mini_boss_brute_scene.instantiate()
+				new_enemy.add_to_group("bosses")
 		new_enemy.position.x = enemy[0]
 		new_enemy.position.y = enemy[1]
 		add_child(new_enemy)

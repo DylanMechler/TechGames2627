@@ -10,6 +10,7 @@ signal level_count_changed(count)
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
 const LEVEL_CLEAR_SCENE = preload("res://level_complete_scene.tscn")
 var loaded_enemies = []
+var loaded_bosses = []
 var enemy_health
 var levels_completed = 0
 var current_level = null
@@ -26,6 +27,7 @@ func load_random_level():
 	add_child(level_instance)
 	current_level = level_instance
 	var enemies = get_tree().get_nodes_in_group("enemies")
+	var bosses = get_tree().get_nodes_in_group("bosses")
 	
 	for enemy in enemies:
 		if enemy.has_signal("player_hit"):
@@ -34,6 +36,9 @@ func load_random_level():
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
 		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
+	
+	for boss in bosses:
+		loaded_bosses.append(boss)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
