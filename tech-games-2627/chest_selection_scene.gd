@@ -29,16 +29,13 @@ func _on_damage_upgrade_button_pressed() -> void:
 	
 func _on_ammo_upgrade_button_pressed() -> void:
 	var player = get_parent().get_node("Player")
-	var bullet = get_parent().get_node("Bullet")
-	player.weapon_ammo_count += 1
+	player.max_weapon_ammo_count += 1
 	if player.reloadSpeed < 0:
 		player.reloadSpeed = 0
 	else:
 		player.reloadSpeed -= 0.10
-	bullet.bullet_speed += 100
 	print("Ammo upgraded! New values: AC=", player.weapon_ammo_count, 
-		  " RS=", player.reloadSpeed,
-		  " BS=", bullet.bullet_speed)
+		  " RS=", player.reloadSpeed)
 	show_level_complete()
 	
 func _on_attack_speed_upgrade_button_pressed() -> void:
