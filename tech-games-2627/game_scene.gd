@@ -8,7 +8,7 @@ signal level_count_changed(count)
 @export var ranged_enemy_scene: PackedScene
 @export var mini_boss_brute_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
-const LEVEL_CLEAR_SCENE = preload("res://level_complete_scene.tscn")
+const CHEST_SELECTION_SCENE = preload("res://chest_selection_scene.tscn")
 var loaded_enemies = []
 var loaded_bosses = []
 var enemy_health
@@ -115,7 +115,7 @@ func _on_player_shoot_blaster(Bullet, direction, location, bullet_damage):
 func _on_level_clear():
 	levels_completed += 1 
 	level_count_changed.emit(levels_completed)
-	var level_clear = LEVEL_CLEAR_SCENE.instantiate()
+	var level_clear = CHEST_SELECTION_SCENE.instantiate()
 	add_child(level_clear)  
 	$Player.get_node("HUD").visible = false
 	get_tree().paused = true 
