@@ -26,7 +26,8 @@ var charge_starting_position # Only uses X value
 var charge_speed = 500
 @export var speed = 125
 @export var damage = 10
-@export var health = 60
+@export var health = 60.0
+@export var max_health = 60.0
 
  
 # Called when the node enters the scene tree for the first time.
@@ -87,6 +88,7 @@ func _process(delta):
 		if ((player_position.x + (player_tile_size/2.0)) > (position.x - (tile_size/2.0))) && ((player_position.x - (player_tile_size/2.0)) < (position.x + (tile_size/2.0))):
 			if ((player_position.y + (player_tile_size/2.0)) > (position.y - (tile_size/2.0))) && ((player_position.y - (player_tile_size/2.0)) < (position.y + (tile_size/2.0))):
 				if !charge_hit_player:
+					print("Mini-Boss Charge")
 					player_hit.emit(damage * special_attack_multiplier)
 					charge_hit_player = true
 	
@@ -128,8 +130,9 @@ func choose_attack_type():
 			attack_build_up_timer.start()
 		else:
 			attack_started = false
-	else:
+	elif player_in_normal_area:
 		attack_type = "normal"
+		print("Mini-Boss Normal")
 		player_hit.emit(damage)
 		attack_started = false
 
@@ -154,9 +157,11 @@ func _on_detection_area_area_exited(_area):
 
 func _on_attack_area_area_entered(_area):
 	player_in_normal_area = true
+	print("Mini-Boss Normal Area Entered")
 
 func _on_attack_area_area_exited(_area):
 	player_in_normal_area = false
+	print("Mini-Boss Normal Area Exited")
 
 
 func _on_special_attack_timer_timeout():
@@ -165,6 +170,7 @@ func _on_special_attack_timer_timeout():
 
 func _on_attack_build_up_timer_timeout():
 	if attack_type == "slam":
+		print("Mini-Boss Slam")
 		player_hit.emit(damage * special_attack_multiplier)
 		attack_timer.start()
 		special_attack_timer.start()
@@ -175,7 +181,9 @@ func _on_attack_build_up_timer_timeout():
 
 func _on_slam_damage_area_area_entered(_area):
 	player_in_slam_area = true
+	print("Mini-Boss Slam Area Entered")
 
 
 func _on_slam_damage_area_area_exited(_area):
 	player_in_slam_area = false
+	print("Mini-Boss Slam Area Exited")

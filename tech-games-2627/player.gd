@@ -46,6 +46,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if in_range_enemies.size() == 0:
+		enemy_in_range = false
+	
 	$HUD/HealthBar/CurrentHealth.size.x = health_bar_length * (health / max_health)
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
@@ -157,7 +160,6 @@ func _on_attack_area_area_entered(area):
 
 
 func _on_attack_area_area_exited(area):
-	enemy_in_range = false
 	in_range_enemies.erase(area)
 
 

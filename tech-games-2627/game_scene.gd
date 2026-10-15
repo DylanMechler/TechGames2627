@@ -43,7 +43,18 @@ func load_random_level():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	pass
+	if loaded_bosses.size() > 0:
+		$Player/HUD/BossBar.visible = true
+		var closest_boss = loaded_bosses[0]
+		for boss in loaded_bosses:
+			if closest_boss:
+				if ((boss.position.y - $Player.position.y) / (boss.position.x - $Player.position.x)) < ((closest_boss.position.y - $Player.position.y) / (closest_boss.position.x - $Player.position.x)):
+					closest_boss = boss
+			else:
+				closest_boss = boss
+		$Player/HUD/BossBar/CurrentHealth.size.x = ($Player/HUD/BossBar/MaxHealth.size.x - 4.0) * (closest_boss.health / closest_boss.max_health)
+	else:
+		$Player/HUD/BossBar.visible = false
 
 func _on_enemy_player_hit(damage):
 	player_attacked.emit(damage)
@@ -71,6 +82,8 @@ func _on_player_player_melee_attack(in_range_enemies, player_damage):
 			print("Enemy Health: ", enemy_health, " || Enemy: ", enemy)
 			if enemy_health <= 0:
 					loaded_enemies.erase(enemy)
+					if loaded_bosses.has(enemy):
+						loaded_bosses.erase(enemy)
 					if loaded_enemies.is_empty():
 						_on_level_clear()
 
