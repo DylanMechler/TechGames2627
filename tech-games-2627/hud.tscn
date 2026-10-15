@@ -43,3 +43,28 @@ offset_bottom = 34.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 24
 text = "Levels Completed: 0"
+
+[node name="BossBar" type="ColorRect" parent="." unique_id=1885412489]
+visible = false
+offset_left = 304.0
+offset_top = 577.0
+offset_right = 848.0
+offset_bottom = 619.0
+color = Color(1, 0.54509807, 0, 1)
+metadata/_edit_group_ = true
+
+[node name="MaxHealth" type="ColorRect" parent="BossBar" unique_id=1563370757]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 541.0
+offset_bottom = 39.0
+color = Color(0, 0, 0, 1)
+
+[node name="CurrentHealth" type="ColorRect" parent="BossBar" unique_id=296443796]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 539.0
+offset_bottom = 37.0
+color = Color(1, 0, 0, 1)

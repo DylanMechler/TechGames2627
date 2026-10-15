@@ -28,7 +28,7 @@ var meleeAttackReady = true
 var rangedAttackReady = true
 var enemy_in_range = false
 var in_range_enemies = []
-var health_bar_length = 440
+var health_bar_length
 var collision_area
 var tile_size = 64
 var level_size # Size of level area
@@ -41,10 +41,14 @@ func _ready():
 	$PlayerCamera.limit_left = 0
 	$PlayerCamera.limit_bottom = level_size.y
 	$PlayerCamera.limit_right = level_size.x
+	health_bar_length = $HUD/HealthBar/CurrentHealth.size.x
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if in_range_enemies.size() == 0:
+		enemy_in_range = false
+	
 	$HUD/HealthBar/CurrentHealth.size.x = health_bar_length * (health / max_health)
 	var velocity = Vector2.ZERO
 	if Input.is_action_pressed("move_right"):
@@ -156,7 +160,6 @@ func _on_attack_area_area_entered(area):
 
 
 func _on_attack_area_area_exited(area):
-	enemy_in_range = false
 	in_range_enemies.erase(area)
 
 

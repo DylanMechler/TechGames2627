@@ -6,9 +6,11 @@ signal level_count_changed(count)
 @export var available_levels: Array[PackedScene]
 @export var basic_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
+@export var mini_boss_brute_scene: PackedScene
 const GAME_OVER_SCENE = preload("res://game_over_scene.tscn")
 const CHEST_SELECTION_SCENE = preload("res://chest_selection_scene.tscn")
 var loaded_enemies = []
+var loaded_bosses = []
 var enemy_health
 var levels_completed = 0
 var current_level = null
@@ -25,6 +27,7 @@ func load_random_level():
 	add_child(level_instance)
 	current_level = level_instance
 	var enemies = get_tree().get_nodes_in_group("enemies")
+	var bosses = get_tree().get_nodes_in_group("bosses")
 	
 	for enemy in enemies:
 		if enemy.has_signal("player_hit"):
@@ -33,11 +36,25 @@ func load_random_level():
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
 		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
+	
+	for boss in bosses:
+		loaded_bosses.append(boss)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	pass
+	if loaded_bosses.size() > 0:
+		$Player/HUD/BossBar.visible = true
+		var closest_boss = loaded_bosses[0]
+		for boss in loaded_bosses:
+			if closest_boss:
+				if ((boss.position.y - $Player.position.y) / (boss.position.x - $Player.position.x)) < ((closest_boss.position.y - $Player.position.y) / (closest_boss.position.x - $Player.position.x)):
+					closest_boss = boss
+			else:
+				closest_boss = boss
+		$Player/HUD/BossBar/CurrentHealth.size.x = ($Player/HUD/BossBar/MaxHealth.size.x - 4.0) * (closest_boss.health / closest_boss.max_health)
+	else:
+		$Player/HUD/BossBar.visible = false
 
 func _on_enemy_player_hit(damage):
 	player_attacked.emit(damage)
@@ -62,9 +79,11 @@ func _on_player_player_melee_attack(in_range_enemies, player_damage):
 		if in_range_enemies.has(enemy):
 			enemy_health = enemy.health - player_damage
 			enemy.health -= player_damage
-			print("Enemy Health: ", enemy_health)
+			print("Enemy Health: ", enemy_health, " || Enemy: ", enemy)
 			if enemy_health <= 0:
 					loaded_enemies.erase(enemy)
+					if loaded_bosses.has(enemy):
+						loaded_bosses.erase(enemy)
 					if loaded_enemies.is_empty():
 						_on_level_clear()
 
