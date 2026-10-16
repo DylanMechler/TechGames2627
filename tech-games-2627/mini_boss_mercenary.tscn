@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bi7rrdmknhnqs"]
 
+[ext_resource type="Script" uid="uid://cwijuwc74u013" path="res://mini_boss_mercenary.gd" id="1_0q7bl"]
 [ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://icon.svg" id="2_numeq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
@@ -14,6 +15,7 @@ radius = 688.0
 [node name="MiniBoss_Mercenary" type="Area2D" unique_id=419293718]
 collision_layer = 4
 collision_mask = 2
+script = ExtResource("1_0q7bl")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=273278852]
@@ -58,6 +60,8 @@ shape = SubResource("CircleShape2D_7brjq")
 
 [connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
 [connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="SpecialAttackTimer" to="." method="_on_special_attack_timer_timeout"]
+[connection signal="timeout" from="AtttackBuildUpTimer" to="." method="_on_atttack_build_up_timer_timeout"]
 [connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
