@@ -56,6 +56,10 @@ func _process(delta):
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
 	
+	if enemy_direction == 1:
+		$Sprite2D.flip_h = false
+	elif enemy_direction == -1:
+		$Sprite2D.flip_h = true
 	
 	if health <= 0:
 		queue_free()

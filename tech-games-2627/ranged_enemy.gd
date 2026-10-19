@@ -68,6 +68,11 @@ func _process(delta):
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
 	
+	if enemy_direction == 1:
+		$Sprite2D.flip_h = false
+	elif enemy_direction == -1:
+		$Sprite2D.flip_h = true
+	
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():
 			attack_timer.start()

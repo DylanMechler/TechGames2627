@@ -35,6 +35,7 @@ position = Vector2(236, 193)
 
 [connection signal="level_count_changed" from="." to="Player" method="_on_game_scene_level_count_changed"]
 [connection signal="player_attacked" from="." to="Player" method="_on_game_scene_player_attacked"]
+[connection signal="player_knockback" from="." to="Player" method="_on_game_scene_player_knockback"]
 [connection signal="PlayerMeleeAttack" from="Player" to="." method="_on_player_player_melee_attack"]
 [connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
 [connection signal="player_position" from="Player" to="." method="_on_player_player_position"]

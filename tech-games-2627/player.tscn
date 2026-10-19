@@ -90,6 +90,8 @@ autostart = true
 wait_time = 1.5
 one_shot = true
 
+[node name="KnockbackRecovery" type="Timer" parent="." unique_id=663311897]
+
 [node name="HUD" parent="." unique_id=733575946 instance=ExtResource("3_i3pqv")]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
@@ -97,3 +99,4 @@ one_shot = true
 [connection signal="timeout" from="MeleeAttackTimer" to="." method="_on_melee_attack_timer_timeout"]
 [connection signal="timeout" from="RangedAttackTimer" to="." method="_on_ranged_attack_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="KnockbackRecovery" to="." method="_on_knockback_recovery_timeout"]

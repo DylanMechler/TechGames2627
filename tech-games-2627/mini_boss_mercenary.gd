@@ -1,6 +1,8 @@
 extends Area2D
 
 signal ranged_attack(bullet, direction, location, damage)
+signal player_hit(damage)
+signal knockback_player(direction)
 
 var Bullet = preload("res://enemy_bullet.tscn")
 
@@ -16,7 +18,9 @@ var player_attackable = false
 var attack_started = false
 var attack_type = "normal" # normal, beam, and explosive
 var collidables = []
-var tile_size = 64
+var tile_size = 128
+var player_tile_size = 64
+var player_in_beam_area = false
 var enemy_direction = 1 # 1 if player is to the right of the enemy, -1 if the player is to the left of the enemy
 var special_attack_ready = true
 @export var speed = 175
@@ -62,17 +66,18 @@ func _process(delta):
 				velocity.x = 0
 	
 	
-	if enemy_direction == -1:
-		if (position.x - player_position.x) <= 250:
-			velocity.x += 1
-	elif enemy_direction == 1:
-		if (player_position.x - position.x) <= 250:
-			velocity.x -= 1
-	
-	
 	velocity = velocity.normalized() * speed
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
+	
+	beam_attack_check()
+	
+	knockback_check()
+	
+	if enemy_direction == 1:
+		$Sprite2D.flip_h = false
+	elif enemy_direction == -1:
+		$Sprite2D.flip_h = true
 	
 	if player_attackable && ((position.y >= player_position.y - 100) && (position.y <= player_position.y + 100)):
 		if attack_timer.is_stopped():
@@ -94,14 +99,14 @@ func choose_new_direction():
 func choose_attack_type():
 	if special_attack_ready:
 		var rand_attack = randi_range(1, 2) # 1:Beam, 2:Explosive
-		if rand_attack == 1:
-			print("BEAM ATTACK")
+		if (rand_attack == 1) && player_in_beam_area:
+			print("BEAM ATTACK CHARGING")
 			attack_type = "beam"
 			attack_started = true
 			special_attack_ready = false
 			attack_build_up_timer.start()
 		elif rand_attack == 2:
-			print("EXPLOSIVE ATTACK")
+			print("EXPLOSIVE ATTACK CHARGING")
 			attack_type = "explosive"
 			attack_started = true
 			special_attack_ready = false
@@ -112,6 +117,23 @@ func choose_attack_type():
 		attack_type = "normal"
 		print("Normal Attack")
 		ranged_attack.emit(Bullet, enemy_direction, position, damage)
+
+
+func knockback_check():
+	if enemy_direction == -1:
+		if (position.x - player_position.x) <= ((tile_size/6.0) + tile_size):
+			print("KNOCKBACK EMITTED")
+			knockback_player.emit(enemy_direction)
+	elif enemy_direction == 1:
+		if (player_position.x - position.x) <= ((tile_size/6.0) + tile_size):
+			print("KNOCKBACK EMITTED")
+			knockback_player.emit(enemy_direction)
+
+
+func beam_attack_check():
+	if player_position.x > (position.x * enemy_direction):
+		if ((player_position.y - player_tile_size) >= (position.y - tile_size/4.0)) || ((player_position.y + player_tile_size) <= (position.y + tile_size/4.0)):
+			player_in_beam_area = true
 
 
 func _on_roam_timer_timeout():
@@ -147,6 +169,9 @@ func _on_special_attack_timer_timeout():
 func _on_atttack_build_up_timer_timeout():
 	if attack_type == "beam":
 		print("Mini-Boss Beam")
+		beam_attack_check()
+		if player_in_beam_area:
+			player_hit.emit(damage * 2)
 		attack_timer.start()
 		special_attack_timer.start()
 		attack_started = false

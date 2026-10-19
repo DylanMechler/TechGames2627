@@ -83,6 +83,10 @@ func _process(delta):
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
 	
+	if enemy_direction == 1:
+		$Sprite2D.flip_h = false
+	elif enemy_direction == -1:
+		$Sprite2D.flip_h = true
 	
 	if collision_type == "charge":
 		if ((player_position.x + (player_tile_size/2.0)) > (position.x - (tile_size/2.0))) && ((player_position.x - (player_tile_size/2.0)) < (position.x + (tile_size/2.0))):

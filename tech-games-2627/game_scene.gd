@@ -1,6 +1,7 @@
 extends Node
 
 signal player_attacked(damage)
+signal player_knockback
 signal level_count_changed(count)
 
 @export var available_levels: Array[PackedScene]
@@ -34,6 +35,9 @@ func load_random_level():
 			enemy.player_hit.connect(_on_enemy_player_hit)
 		if enemy.has_signal("ranged_attack"):
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
+		if enemy.has_signal("knockback_player"):
+			print("KNOCKBACK CONNECTED")
+			enemy.knockback_player.connect(_on_enemy_knockback_attack)
 		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
 	
@@ -58,6 +62,11 @@ func _process(_delta):
 
 func _on_enemy_player_hit(damage):
 	player_attacked.emit(damage)
+
+
+func _on_enemy_knockback_attack(direction):
+	print("KNOCKBACK SENT")
+	player_knockback.emit(direction)
 
 
 func _on_ranged_enemy_ranged_attack(Bullet, direction, location, bullet_damage):
