@@ -13,7 +13,7 @@ config_version=5
 config/name="TechGames2627"
 run/main_scene="uid://bpejleiu67r6r"
 config/features=PackedStringArray("4.7", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://ArtAssets/icon.svg"
 
 [display]
 
