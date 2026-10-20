@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://dhcddedt8fst2"]
+
+[node name="HUD" type="CanvasLayer" unique_id=655638930]
+
+[node name="HealthBar" type="ColorRect" parent="." unique_id=2078182674]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 456.0
+offset_bottom = 48.0
+color = Color(0, 0, 0, 1)
+
+[node name="MaxHealth" type="ColorRect" parent="HealthBar" unique_id=1749179454]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 446.0
+offset_bottom = 38.0
+color = Color(0.5333243, 3.2488256e-07, 2.8878452e-07, 1)
+
+[node name="CurrentHealth" type="ColorRect" parent="HealthBar" unique_id=1489966105]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 444.0
+offset_bottom = 36.0
+color = Color(1, 0, 0, 1)
+
+[node name="AmmoCount" type="Label" parent="." unique_id=1416149228]
+offset_left = 480.0
+offset_top = 12.0
+offset_right = 583.0
+offset_bottom = 46.0
+theme_override_font_sizes/font_size = 24
+text = "Ammo: 6/6"
+
+[node name="LevelLabel" type="Label" parent="." unique_id=792365338]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -254.0
+offset_right = -23.0
+offset_bottom = 34.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Levels Completed: 0"
+
+[node name="BossBar" type="ColorRect" parent="." unique_id=1885412489]
+visible = false
+offset_left = 304.0
+offset_top = 577.0
+offset_right = 848.0
+offset_bottom = 619.0
+color = Color(1, 0.54509807, 0, 1)
+metadata/_edit_group_ = true
+
+[node name="MaxHealth" type="ColorRect" parent="BossBar" unique_id=1563370757]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 541.0
+offset_bottom = 39.0
+color = Color(0, 0, 0, 1)
+
+[node name="CurrentHealth" type="ColorRect" parent="BossBar" unique_id=296443796]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 539.0
+offset_bottom = 37.0
+color = Color(1, 0, 0, 1)
