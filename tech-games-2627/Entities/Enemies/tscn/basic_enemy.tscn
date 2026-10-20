@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpb737vrrmc4a" path="res://ArtAssets/alien-idle1.png" id="2_f8nfo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(72, 112)
+size = Vector2(72, 96)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
 animations = [{
@@ -18,7 +18,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3p0h"]
-size = Vector2(7.6433115, 12.422359)
+size = Vector2(10.191082, 9.937887)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_unl08"]
 radius = 269.0
@@ -36,16 +36,16 @@ collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1196350978]
-position = Vector2(-44, 0)
+position = Vector2(-44, 8)
 shape = SubResource("RectangleShape2D_7brjq")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1580596651]
-position = Vector2(2.861023e-06, 9.536743e-07)
-scale = Vector2(1.5, 1.5)
+position = Vector2(-7.999998, 8.000002)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066398689]
-position = Vector2(-4.7683716e-07, 2.3841858e-07)
+position = Vector2(-8, 8)
 scale = Vector2(6.28, 6.44)
 shape = SubResource("RectangleShape2D_d3p0h")
 

@@ -4,7 +4,7 @@ signal ranged_attack(bullet, direction, location, damage)
 signal player_hit(damage)
 signal knockback_player(direction)
 
-var Bullet = preload("res://enemy_bullet.tscn")
+var Bullet = preload("res://Entities/Enemies/tscn/enemy_bullet.tscn")
 
 @onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
