@@ -1,10 +1,21 @@
 [gd_scene format=3 uid="uid://08v4eh81ktak"]
 
-[ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://ArtAssets/icon.svg" id="1_kexd4"]
 [ext_resource type="Script" uid="uid://daxb1vdhx7v14" path="res://Entities/Enemies/gd/ranged_enemy.gd" id="1_ln3ug"]
+[ext_resource type="Texture2D" uid="uid://bpb737vrrmc4a" path="res://ArtAssets/alien-idle1.png" id="2_ulrtj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ulrtj")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(64, 64)
+size = Vector2(48, 80)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kexd4"]
 radius = 995.0
@@ -18,9 +29,10 @@ collision_mask = 2
 script = ExtResource("1_ln3ug")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=273278852]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_kexd4")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1949904927]
+position = Vector2(3.8146973e-06, 1.9073486e-06)
+scale = Vector2(1.5, 1.4999999)
+sprite_frames = SubResource("SpriteFrames_7brjq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886231368]
 shape = SubResource("RectangleShape2D_7brjq")

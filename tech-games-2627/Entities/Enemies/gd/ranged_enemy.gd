@@ -63,6 +63,10 @@ func _process(delta):
 		if (player_position.x - position.x) <= 250:
 			velocity.x -= 1
 	
+	if enemy_direction == -1:
+		$Sprite2D.flip_h = true
+	elif enemy_direction == 1:
+		$Sprite2D.flip_h = false
 	
 	velocity = velocity.normalized() * speed
 	position += velocity * delta
