@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://cp0no8p4onuid"]
+
+[ext_resource type="Script" uid="uid://cnek0xrqb0pwf" path="res://Entities/Enemies/gd/basic_enemy.gd" id="1_rwafm"]
+[ext_resource type="Texture2D" uid="uid://bpb737vrrmc4a" path="res://ArtAssets/alien-idle1.png" id="2_f8nfo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
+size = Vector2(72, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f8nfo")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3p0h"]
+size = Vector2(7.6433115, 12.422359)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_unl08"]
+radius = 269.0
+
+[node name="BasicEnemy" type="Area2D" unique_id=992191196]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_rwafm")
+metadata/_edit_group_ = true
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=1889533916]
+position = Vector2(80, 0)
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1196350978]
+position = Vector2(-44, 0)
+shape = SubResource("RectangleShape2D_7brjq")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1580596651]
+position = Vector2(2.861023e-06, 9.536743e-07)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_7brjq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1066398689]
+position = Vector2(-4.7683716e-07, 2.3841858e-07)
+scale = Vector2(6.28, 6.44)
+shape = SubResource("RectangleShape2D_d3p0h")
+
+[node name="RoamTimer" type="Timer" parent="." unique_id=590012356]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=789346226]
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=889423478]
+visible = false
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=799164481]
+shape = SubResource("CircleShape2D_unl08")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]
+[connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cryle7orr7sea"]
+
+[ext_resource type="Script" uid="uid://b0ngsbnapdky0" path="res://CoreScenes/gd/game_scene.gd" id="1_hhclm"]
+[ext_resource type="PackedScene" uid="uid://b7hg62nq1ygrn" path="res://Levels/tscn/level_blue.tscn" id="2_cuj64"]
+[ext_resource type="PackedScene" uid="uid://bf52b0dx1n6tx" path="res://Levels/tscn/level_red.tscn" id="3_362sh"]
+[ext_resource type="PackedScene" uid="uid://ibtjvhvtmay6" path="res://Levels/tscn/level_brown.tscn" id="4_y66ln"]
+[ext_resource type="PackedScene" uid="uid://c1efusbptcpah" path="res://Levels/tscn/level_black.tscn" id="5_2lvgv"]
+[ext_resource type="PackedScene" uid="uid://e412vgk88eef" path="res://Levels/tscn/level_mix.tscn" id="6_7tmvf"]
+[ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://Entities/Enemies/tscn/basic_enemy.tscn" id="7_j5uka"]
+[ext_resource type="PackedScene" uid="uid://08v4eh81ktak" path="res://Entities/Enemies/tscn/ranged_enemy.tscn" id="8_v23ks"]
+[ext_resource type="PackedScene" uid="uid://bqpvm7x4thjwi" path="res://Entities/Enemies/tscn/mini_boss_brute.tscn" id="9_s0cxh"]
+[ext_resource type="PackedScene" uid="uid://w4hrke8m53jy" path="res://Entities/Player/tscn/player.tscn" id="10_yltfd"]
+[ext_resource type="PackedScene" uid="uid://io1jnnxxpo55" path="res://CoreScenes/tscn/pause_menu_scene.tscn" id="11_hhclm"]
+
+[node name="GameScene" type="Node" unique_id=957564006]
+process_mode = 1
+script = ExtResource("1_hhclm")
+available_levels = Array[PackedScene]([ExtResource("2_cuj64"), ExtResource("3_362sh"), ExtResource("4_y66ln"), ExtResource("5_2lvgv"), ExtResource("6_7tmvf")])
+basic_enemy_scene = ExtResource("7_j5uka")
+ranged_enemy_scene = ExtResource("8_v23ks")
+mini_boss_brute_scene = ExtResource("9_s0cxh")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1075344325]
+offset_left = 144.0
+offset_top = 107.0
+offset_right = 331.0
+offset_bottom = 282.0
+color = Color(0.5039635, 0.9883061, 0.9141851, 1)
+
+[node name="Player" parent="." unique_id=732282252 instance=ExtResource("10_yltfd")]
+z_index = 1
+position = Vector2(236, 193)
+
+[node name="PauseMenuScene" parent="." unique_id=862291999 instance=ExtResource("11_hhclm")]
+
+[connection signal="level_count_changed" from="." to="Player" method="_on_game_scene_level_count_changed"]
+[connection signal="player_attacked" from="." to="Player" method="_on_game_scene_player_attacked"]
+[connection signal="player_knockback" from="." to="Player" method="_on_game_scene_player_knockback"]
+[connection signal="PlayerMeleeAttack" from="Player" to="." method="_on_player_player_melee_attack"]
+[connection signal="player_death" from="Player" to="." method="_on_player_player_death"]
+[connection signal="player_position" from="Player" to="." method="_on_player_player_position"]
+[connection signal="shoot_blaster" from="Player" to="." method="_on_player_shoot_blaster"]
