@@ -82,12 +82,18 @@ func _process(delta):
 	else:
 		$PlayerAnimatedSprite.stop()
 	
+	if in_knockback_recovery:
+		velocity = 0
+	
+	#any velocity changes that should not be affected by knockback recovery should go below here
+	
 	if apply_knockback:
 		print("KNOCKBACK APPLIED")
 		velocity.x = (5000 * knockback_direction)
 		apply_knockback = false
 		in_knockback_recovery = true
 		$KnockbackRecovery.start()
+	
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
