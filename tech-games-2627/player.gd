@@ -83,7 +83,7 @@ func _process(delta):
 		$PlayerAnimatedSprite.stop()
 	
 	if in_knockback_recovery:
-		velocity = 0
+		velocity = Vector2.ZERO
 	
 	#any velocity changes that should not be affected by knockback recovery should go below here
 	
