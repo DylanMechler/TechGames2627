@@ -79,6 +79,10 @@ func _process(delta):
 				if (((check_position.x - (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0))) && ((check_position.x - (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0)))) || (((check_position.x + (tile_size/2.0)) <= (collidable.position.x + (tile_size/2.0))) && ((check_position.x + (tile_size/2.0)) >= (collidable.position.x - (tile_size/2.0)))):
 					velocity.y = 0
 	
+	if enemy_direction == -1:
+		$Sprite2D.flip_h = true
+	elif enemy_direction == 1:
+		$Sprite2D.flip_h = false
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cf4c1yda1gmyh"]
 
-[ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://ArtAssets/icon.svg" id="1_al265"]
 [ext_resource type="Script" uid="uid://bj61vheh8w0bh" path="res://CoreScenes/gd/chara_select_scene.gd" id="1_ank64"]
+[ext_resource type="Texture2D" uid="uid://b8ae22odii7mv" path="res://ArtAssets/vagabond-idle1.png" id="2_ar87g"]
 [ext_resource type="Script" uid="uid://cd5dyeibj43jg" path="res://CoreScenes/gd/option_button.gd" id="3_5kfhc"]
 
 [node name="CharaSelectScene" type="Node" unique_id=267006659]
@@ -33,7 +33,7 @@ grow_vertical = 2
 focus_neighbor_bottom = NodePath("../ConfirmButton")
 item_count = 1
 popup/item_0/text = "Guy"
-popup/item_0/icon = ExtResource("1_al265")
+popup/item_0/icon = ExtResource("2_ar87g")
 popup/item_0/id = 0
 script = ExtResource("3_5kfhc")
 

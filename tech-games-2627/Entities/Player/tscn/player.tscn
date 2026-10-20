@@ -1,20 +1,17 @@
 [gd_scene format=3 uid="uid://w4hrke8m53jy"]
 
-[ext_resource type="Texture2D" uid="uid://bfxf3ft1lumj2" path="res://ArtAssets/icon.svg" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://bqfj2xqr3lo2t" path="res://Entities/Player/gd/player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://b8ae22odii7mv" path="res://ArtAssets/vagabond-idle1.png" id="3_hcrjb"]
 [ext_resource type="PackedScene" uid="uid://dhcddedt8fst2" path="res://CoreScenes/tscn/hud.tscn" id="3_i3pqv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1glom"]
-size = Vector2(80, 128)
+size = Vector2(72, 112)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_4flbx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("1_4flbx")
+"texture": ExtResource("3_hcrjb")
 }],
 "loop": 1,
 "name": &"heavy_attack",
@@ -22,10 +19,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_4flbx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("1_4flbx")
+"texture": ExtResource("3_hcrjb")
 }],
 "loop": 1,
 "name": &"light_attack",
@@ -33,10 +27,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_4flbx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("1_4flbx")
+"texture": ExtResource("3_hcrjb")
 }],
 "loop": 1,
 "name": &"walk",
@@ -44,7 +35,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(64, 64)
+size = Vector2(48, 80)
 
 [node name="Player" type="Area2D" unique_id=732282252]
 collision_layer = 2
@@ -61,16 +52,11 @@ collision_mask = 4
 metadata/_edit_group_ = true
 
 [node name="AttackCollisionArea" type="CollisionShape2D" parent="AttackArea" unique_id=1608292817]
-position = Vector2(-40, 0)
+position = Vector2(-44, 0)
 shape = SubResource("RectangleShape2D_1glom")
 
-[node name="Sprite2D" type="Sprite2D" parent="AttackArea" unique_id=81597996]
-position = Vector2(-39.999996, 7.6293945e-06)
-scale = Vector2(0.625, 1)
-texture = ExtResource("1_4flbx")
-
 [node name="PlayerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1898497444]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 animation = &"heavy_attack"
 
