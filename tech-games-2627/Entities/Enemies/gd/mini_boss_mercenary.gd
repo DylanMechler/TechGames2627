@@ -120,14 +120,15 @@ func choose_attack_type():
 
 
 func knockback_check():
-	if enemy_direction == -1:
-		if (position.x - player_position.x) <= ((tile_size/6.0) + tile_size):
-			print("KNOCKBACK EMITTED")
-			knockback_player.emit(enemy_direction)
-	elif enemy_direction == 1:
-		if (player_position.x - position.x) <= ((tile_size/6.0) + tile_size):
-			print("KNOCKBACK EMITTED")
-			knockback_player.emit(enemy_direction)
+	if (((player_position.y + (player_tile_size/2.0)) >= (position.y - (tile_size/3.0))) && ((player_position.y + (player_tile_size/2.0)) <= (position.y + (tile_size/3.0)))) || (((player_position.y - (player_tile_size/2.0)) >= (position.y - (tile_size/3.0))) && ((player_position.y - (player_tile_size/2.0)) <= (position.y + (tile_size/3.0)))):
+		if enemy_direction == 1:
+			if (player_position.x - (player_tile_size/2.0)) <= (position.x + ((tile_size/6.0) + (tile_size/2.0))):
+				print("KNOCKBACK EMITTED: 1")
+				knockback_player.emit(enemy_direction)
+		elif enemy_direction == -1:
+			if (player_position.x + (player_tile_size/2.0)) >= (position.x - ((tile_size/6.0) + (tile_size/2.0))):
+				print("KNOCKBACK EMITTED: 2")
+				knockback_player.emit(enemy_direction)
 
 
 func beam_attack_check():
