@@ -89,8 +89,7 @@ func _process(delta):
 	
 	if apply_knockback:
 		print("KNOCKBACK APPLIED")
-		velocity.x = (5000 * knockback_direction)
-		apply_knockback = false
+		velocity.x = (625 * knockback_direction)
 		in_knockback_recovery = true
 		$KnockbackRecovery.start()
 	
@@ -197,8 +196,13 @@ func _on_game_scene_level_count_changed(count):
 func _on_game_scene_player_knockback(direction):
 	print("KNOCKBACK TRUE")
 	apply_knockback = true
+	$KnockbackApplicationTimer.start()
 	knockback_direction = direction
 
 
 func _on_knockback_recovery_timeout():
 	in_knockback_recovery = false
+
+
+func _on_knockback_application_timer_timeout():
+	apply_knockback = false

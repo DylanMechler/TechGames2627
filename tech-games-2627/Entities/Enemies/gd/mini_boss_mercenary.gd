@@ -1,10 +1,12 @@
 extends Area2D
 
 signal ranged_attack(bullet, direction, location, damage)
+signal explosive_attack(explosive, location, damage)
 signal player_hit(damage)
 signal knockback_player(direction)
 
 var Bullet = preload("res://Entities/Enemies/tscn/enemy_bullet.tscn")
+var Explosive = preload("res://Entities/Enemies/tscn/enemy_explosive.tscn")
 
 @onready var roam_timer: Timer = $RoamTimer
 @onready var attack_timer: Timer = $AttackTimer
@@ -120,13 +122,13 @@ func choose_attack_type():
 
 
 func knockback_check():
-	if (((player_position.y + (player_tile_size/2.0)) >= (position.y - (tile_size/3.0))) && ((player_position.y + (player_tile_size/2.0)) <= (position.y + (tile_size/3.0)))) || (((player_position.y - (player_tile_size/2.0)) >= (position.y - (tile_size/3.0))) && ((player_position.y - (player_tile_size/2.0)) <= (position.y + (tile_size/3.0)))):
+	if (((player_position.y + (player_tile_size/2.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y + (player_tile_size/2.0)) <= (position.y + (tile_size/5.0)))) || (((player_position.y - (player_tile_size/2.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y - (player_tile_size/2.0)) <= (position.y + (tile_size/5.0)))):
 		if enemy_direction == 1:
-			if (player_position.x - (player_tile_size/2.0)) <= (position.x + ((tile_size/6.0) + (tile_size/2.0))):
+			if (player_position.x - (player_tile_size/2.0)) <= (position.x + (tile_size/3.0)):
 				print("KNOCKBACK EMITTED: 1")
 				knockback_player.emit(enemy_direction)
 		elif enemy_direction == -1:
-			if (player_position.x + (player_tile_size/2.0)) >= (position.x - ((tile_size/6.0) + (tile_size/2.0))):
+			if (player_position.x + (player_tile_size/2.0)) >= (position.x - (tile_size/3.0)):
 				print("KNOCKBACK EMITTED: 2")
 				knockback_player.emit(enemy_direction)
 
@@ -135,6 +137,17 @@ func beam_attack_check():
 	if player_position.x > (position.x * enemy_direction):
 		if ((player_position.y - player_tile_size) >= (position.y - tile_size/4.0)) || ((player_position.y + player_tile_size) <= (position.y + tile_size/4.0)):
 			player_in_beam_area = true
+
+
+func activate_explosive_attack():
+	var explosive_num = randi_range(3, 6)
+	print(explosive_num)
+	while (explosive_num > 0):
+		var direction = randf_range(-PI / 4.0, PI / 4.0)
+		var explosive_velocity = Vector2(randf_range(0.0, 688.0), 0.0)
+		print("Explosive Added")
+		explosive_attack.emit(Explosive, position, damage)
+		explosive_num -= 1
 
 
 func _on_roam_timer_timeout():
@@ -178,6 +191,7 @@ func _on_atttack_build_up_timer_timeout():
 		attack_started = false
 	elif attack_type == "explosive":
 		print("Mini-Boss Explosive")
+		activate_explosive_attack()
 		attack_timer.start()
 		special_attack_timer.start()
 		attack_started = false

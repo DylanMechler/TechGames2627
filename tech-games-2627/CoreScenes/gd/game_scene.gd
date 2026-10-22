@@ -35,8 +35,9 @@ func load_random_level():
 			enemy.player_hit.connect(_on_enemy_player_hit)
 		if enemy.has_signal("ranged_attack"):
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
+		if enemy.has_signal("explosive_attack"):
+			enemy.explosive_attack.connect(_on_enemy_explosive_attack)
 		if enemy.has_signal("knockback_player"):
-			print("KNOCKBACK CONNECTED")
 			enemy.knockback_player.connect(_on_enemy_knockback_attack)
 		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
@@ -67,6 +68,10 @@ func _on_enemy_player_hit(damage):
 func _on_enemy_knockback_attack(direction):
 	print("KNOCKBACK SENT")
 	player_knockback.emit(direction)
+
+
+func _on_enemy_explosive_attack(Explosive, location, damage):
+	print("EXPLOSIVE GOES HERE")
 
 
 func _on_ranged_enemy_ranged_attack(Bullet, direction, location, bullet_damage):
