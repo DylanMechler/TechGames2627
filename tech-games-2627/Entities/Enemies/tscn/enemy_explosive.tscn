@@ -75,6 +75,8 @@ animations = [{
 }]
 
 [node name="EnemyExplosive" type="Area2D" unique_id=4386605]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("1_lbggx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1462697809]
@@ -84,4 +86,15 @@ shape = SubResource("CircleShape2D_7brjq")
 position = Vector2(2.3841858e-07, 0)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_7brjq")
-animation = &"idle"
+animation = &"stage_1"
+
+[node name="Stage1Timer" type="Timer" parent="." unique_id=1801771861]
+wait_time = 5.0
+
+[node name="Stage2Timer" type="Timer" parent="." unique_id=1369590136]
+wait_time = 2.5
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="timeout" from="Stage1Timer" to="." method="_on_stage_1_timer_timeout"]
+[connection signal="timeout" from="Stage2Timer" to="." method="_on_stage_2_timer_timeout"]

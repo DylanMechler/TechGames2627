@@ -122,14 +122,12 @@ func choose_attack_type():
 
 
 func knockback_check():
-	if (((player_position.y + (player_tile_size/2.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y + (player_tile_size/2.0)) <= (position.y + (tile_size/5.0)))) || (((player_position.y - (player_tile_size/2.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y - (player_tile_size/2.0)) <= (position.y + (tile_size/5.0)))):
+	if (((player_position.y + (player_tile_size/3.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y + (player_tile_size/3.0)) <= (position.y + (tile_size/5.0)))) || (((player_position.y - (player_tile_size/3.0)) >= (position.y - (tile_size/5.0))) && ((player_position.y - (player_tile_size/3.0)) <= (position.y + (tile_size/5.0)))):
 		if enemy_direction == 1:
 			if (player_position.x - (player_tile_size/2.0)) <= (position.x + (tile_size/3.0)):
-				print("KNOCKBACK EMITTED: 1")
 				knockback_player.emit(enemy_direction)
 		elif enemy_direction == -1:
 			if (player_position.x + (player_tile_size/2.0)) >= (position.x - (tile_size/3.0)):
-				print("KNOCKBACK EMITTED: 2")
 				knockback_player.emit(enemy_direction)
 
 
@@ -143,10 +141,8 @@ func activate_explosive_attack():
 	var explosive_num = randi_range(3, 6)
 	print(explosive_num)
 	while (explosive_num > 0):
-		var direction = randf_range(-PI / 4.0, PI / 4.0)
-		var explosive_velocity = Vector2(randf_range(0.0, 688.0), 0.0)
 		print("Explosive Added")
-		explosive_attack.emit(Explosive, position, damage)
+		explosive_attack.emit(Explosive, position, damage*2)
 		explosive_num -= 1
 
 

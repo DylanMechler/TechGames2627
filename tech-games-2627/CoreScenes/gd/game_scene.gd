@@ -71,7 +71,11 @@ func _on_enemy_knockback_attack(direction):
 
 
 func _on_enemy_explosive_attack(Explosive, location, damage):
-	print("EXPLOSIVE GOES HERE")
+	var spawned_explosive = Explosive.instantiate()
+	add_child(spawned_explosive)
+	spawned_explosive.enemy_location = location
+	spawned_explosive.damage = damage
+	spawned_explosive.player_hit.connect(_on_enemy_player_hit)
 
 
 func _on_ranged_enemy_ranged_attack(Bullet, direction, location, bullet_damage):

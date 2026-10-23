@@ -88,7 +88,6 @@ func _process(delta):
 	#any velocity changes that should not be affected by knockback recovery should go below here
 	
 	if apply_knockback:
-		print("KNOCKBACK APPLIED")
 		velocity.x = (625 * knockback_direction)
 		in_knockback_recovery = true
 		$KnockbackRecovery.start()
@@ -194,7 +193,6 @@ func _on_game_scene_level_count_changed(count):
 
 
 func _on_game_scene_player_knockback(direction):
-	print("KNOCKBACK TRUE")
 	apply_knockback = true
 	$KnockbackApplicationTimer.start()
 	knockback_direction = direction
