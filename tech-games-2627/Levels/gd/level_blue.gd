@@ -4,7 +4,7 @@ extends Node2D
 @export var ranged_enemy_scene: PackedScene
 @export var mini_boss_brute_scene: PackedScene
 @export var mini_boss_mercenary_scene: PackedScene
-var enemies = [[500, 500, "melee"], [200, 200, "melee"], [600, 600, "mercenary"]]
+var enemies = [[500, 500, "melee"], [200, 200, "melee"], [600, 600, "brute"]]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

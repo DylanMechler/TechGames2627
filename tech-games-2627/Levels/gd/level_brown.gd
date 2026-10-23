@@ -4,10 +4,10 @@ extends Node2D
 @export var ranged_enemy_scene: PackedScene
 @export var mini_boss_brute_scene: PackedScene
 @export var mini_boss_mercenary_scene: PackedScene
-var enemies = [[500, 500, "melee"], [200, 200, "ranged"], [350, 350, "melee"], [600, 600, "mercenary"]]
+var enemies = [[500, 500, "melee"], [200, 200, "ranged"], [350, 350, "melee"], [600, 600, "brute"]]
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready():
 	for enemy in enemies:
 		var new_enemy
 		match enemy[2]:
@@ -28,5 +28,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(_delta):
 	pass

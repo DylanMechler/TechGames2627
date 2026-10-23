@@ -10,18 +10,18 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause_game"):
 		if get_tree().paused:
-			pause_change.emit(get_tree().paused)
 			get_tree().paused = false
+			pause_change.emit(false)
 			hide()
 		else:
-			pause_change.emit(get_tree().paused)
+			pause_change.emit(true)
 			get_tree().paused = true
 			show()
 			$VBoxContainer/ResumeButton.grab_focus()
 
 func _on_resume_button_pressed() -> void:
-	pause_change.emit(get_tree().paused)
 	get_tree().paused = false
+	pause_change.emit(false)
 	hide()
 
 func _on_save_button_pressed() -> void:

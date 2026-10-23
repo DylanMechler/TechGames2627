@@ -141,7 +141,6 @@ func activate_explosive_attack():
 	var explosive_num = randi_range(3, 6)
 	print(explosive_num)
 	while (explosive_num > 0):
-		print("Explosive Added")
 		explosive_attack.emit(Explosive, position, damage*2)
 		explosive_num -= 1
 

@@ -137,7 +137,7 @@ func _on_level_clear():
 	add_child(level_clear)  
 	$Player.get_node("HUD").visible = false
 	get_tree().paused = true 
-	
+
 func load_next_level():
 	loaded_enemies.clear()
 	
@@ -153,7 +153,8 @@ func load_next_level():
 
 
 func _on_pause_menu_scene_pause_change(pause_state):
+	print(pause_state)
 	if pause_state:
-		$Player.get_node("HUD").visible = true
-	else:
 		$Player.get_node("HUD").visible = false
+	else:
+		$Player.get_node("HUD").visible = true
