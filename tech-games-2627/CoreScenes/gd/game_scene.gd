@@ -1,6 +1,7 @@
 extends Node
 
 signal player_attacked(damage)
+signal player_knockback
 signal level_count_changed(count)
 
 @export var available_levels: Array[PackedScene]
@@ -34,6 +35,10 @@ func load_random_level():
 			enemy.player_hit.connect(_on_enemy_player_hit)
 		if enemy.has_signal("ranged_attack"):
 			enemy.ranged_attack.connect(_on_ranged_enemy_ranged_attack)
+		if enemy.has_signal("explosive_attack"):
+			enemy.explosive_attack.connect(_on_enemy_explosive_attack)
+		if enemy.has_signal("knockback_player"):
+			enemy.knockback_player.connect(_on_enemy_knockback_attack)
 		enemy.collidables.append($Player)
 		loaded_enemies.append(enemy)
 	
@@ -58,6 +63,19 @@ func _process(_delta):
 
 func _on_enemy_player_hit(damage):
 	player_attacked.emit(damage)
+
+
+func _on_enemy_knockback_attack(direction):
+	print("KNOCKBACK SENT")
+	player_knockback.emit(direction)
+
+
+func _on_enemy_explosive_attack(Explosive, location, damage):
+	var spawned_explosive = Explosive.instantiate()
+	add_child(spawned_explosive)
+	spawned_explosive.enemy_location = location
+	spawned_explosive.damage = damage
+	spawned_explosive.player_hit.connect(_on_enemy_player_hit)
 
 
 func _on_ranged_enemy_ranged_attack(Bullet, direction, location, bullet_damage):
@@ -119,7 +137,7 @@ func _on_level_clear():
 	add_child(level_clear)  
 	$Player.get_node("HUD").visible = false
 	get_tree().paused = true 
-	
+
 func load_next_level():
 	loaded_enemies.clear()
 	
@@ -136,6 +154,6 @@ func load_next_level():
 
 func _on_pause_menu_scene_pause_change(pause_state):
 	if pause_state:
-		$Player.get_node("HUD").visible = true
-	else:
 		$Player.get_node("HUD").visible = false
+	else:
+		$Player.get_node("HUD").visible = true

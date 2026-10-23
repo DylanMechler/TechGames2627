@@ -35,7 +35,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(48, 80)
+size = Vector2(64, 64)
 
 [node name="Player" type="Area2D" unique_id=732282252]
 collision_layer = 2
@@ -46,7 +46,7 @@ script = ExtResource("1_onrkg")
 limit_smoothed = true
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=599019725]
-position = Vector2(80, 0)
+position = Vector2(88, 0)
 collision_layer = 0
 collision_mask = 4
 metadata/_edit_group_ = true
@@ -56,7 +56,8 @@ position = Vector2(-44, 0)
 shape = SubResource("RectangleShape2D_1glom")
 
 [node name="PlayerAnimatedSprite" type="AnimatedSprite2D" parent="." unique_id=1898497444]
-scale = Vector2(1.5, 1.5)
+position = Vector2(-4.7683716e-07, 1.4305115e-06)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 animation = &"heavy_attack"
 
@@ -76,6 +77,11 @@ autostart = true
 wait_time = 1.5
 one_shot = true
 
+[node name="KnockbackRecovery" type="Timer" parent="." unique_id=663311897]
+
+[node name="KnockbackApplicationTimer" type="Timer" parent="." unique_id=327798136]
+wait_time = 0.2
+
 [node name="HUD" parent="." unique_id=733575946 instance=ExtResource("3_i3pqv")]
 
 [connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
@@ -83,3 +89,5 @@ one_shot = true
 [connection signal="timeout" from="MeleeAttackTimer" to="." method="_on_melee_attack_timer_timeout"]
 [connection signal="timeout" from="RangedAttackTimer" to="." method="_on_ranged_attack_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="KnockbackRecovery" to="." method="_on_knockback_recovery_timeout"]
+[connection signal="timeout" from="KnockbackApplicationTimer" to="." method="_on_knockback_application_timer_timeout"]

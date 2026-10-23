@@ -1,0 +1,104 @@
+[gd_scene format=3 uid="uid://bi7rrdmknhnqs"]
+
+[ext_resource type="Script" uid="uid://cwijuwc74u013" path="res://Entities/Enemies/gd/mini_boss_mercenary.gd" id="1_y1nla"]
+[ext_resource type="Texture2D" uid="uid://bpb737vrrmc4a" path="res://ArtAssets/alien-idle1.png" id="2_y1nla"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_y1nla")
+}],
+"loop": 1,
+"name": &"beam_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_y1nla")
+}],
+"loop": 1,
+"name": &"explosive_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_y1nla")
+}],
+"loop": 1,
+"name": &"normal_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_y1nla")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
+size = Vector2(64, 64)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kexd4"]
+radius = 995.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7brjq"]
+radius = 688.0
+
+[node name="MiniBoss_Mercenary" type="Area2D" unique_id=419293718]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_y1nla")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2082899562]
+position = Vector2(-2.3841858e-06, 9.536743e-07)
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_7brjq")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886231368]
+scale = Vector2(1.9999988, 2)
+shape = SubResource("RectangleShape2D_7brjq")
+
+[node name="RoamTimer" type="Timer" parent="." unique_id=2028027959]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=553805834]
+wait_time = 1.5
+one_shot = true
+
+[node name="SpecialAttackTimer" type="Timer" parent="." unique_id=549767937]
+wait_time = 12.0
+one_shot = true
+
+[node name="AtttackBuildUpTimer" type="Timer" parent="." unique_id=471425792]
+wait_time = 1.5
+one_shot = true
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=296915144]
+visible = false
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="DetectionRadius" type="CollisionShape2D" parent="DetectionArea" unique_id=309146019]
+shape = SubResource("CircleShape2D_kexd4")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=596701846]
+collision_layer = 0
+collision_mask = 2
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=596036738]
+shape = SubResource("CircleShape2D_7brjq")
+
+[connection signal="timeout" from="RoamTimer" to="." method="_on_roam_timer_timeout"]
+[connection signal="timeout" from="AttackTimer" to="." method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="SpecialAttackTimer" to="." method="_on_special_attack_timer_timeout"]
+[connection signal="timeout" from="AtttackBuildUpTimer" to="." method="_on_atttack_build_up_timer_timeout"]
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_area_exited"]
+[connection signal="area_entered" from="AttackArea" to="." method="_on_attack_area_area_entered"]
+[connection signal="area_exited" from="AttackArea" to="." method="_on_attack_area_area_exited"]

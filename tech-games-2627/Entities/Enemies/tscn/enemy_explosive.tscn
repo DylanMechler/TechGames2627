@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://c1cwruppox7vk"]
+
+[ext_resource type="Script" uid="uid://b5qlx1rc53acd" path="res://Entities/Enemies/tscn/enemy_explosive.gd" id="1_lbggx"]
+[ext_resource type="Texture2D" uid="uid://cet4btvch461u" path="res://ArtAssets/FirstTileSet.png" id="1_w2itp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7brjq"]
+radius = 128.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2itp"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aq3nv"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2yha"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmyyv"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yjpdq"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqgg1"]
+atlas = ExtResource("1_w2itp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2itp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aq3nv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2yha")
+}],
+"loop": 1,
+"name": &"stage_1",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmyyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yjpdq")
+}],
+"loop": 1,
+"name": &"stage_2",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yjpdq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqgg1")
+}],
+"loop": 0,
+"name": &"stage_3",
+"speed": 5.0
+}]
+
+[node name="EnemyExplosive" type="Area2D" unique_id=4386605]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_lbggx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1462697809]
+shape = SubResource("CircleShape2D_7brjq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1924286200]
+position = Vector2(2.3841858e-07, 0)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_7brjq")
+animation = &"stage_1"
+
+[node name="Stage1Timer" type="Timer" parent="." unique_id=1801771861]
+wait_time = 5.0
+
+[node name="Stage2Timer" type="Timer" parent="." unique_id=1369590136]
+wait_time = 2.5
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="timeout" from="Stage1Timer" to="." method="_on_stage_1_timer_timeout"]
+[connection signal="timeout" from="Stage2Timer" to="." method="_on_stage_2_timer_timeout"]

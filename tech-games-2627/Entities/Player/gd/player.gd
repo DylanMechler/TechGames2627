@@ -27,6 +27,9 @@ var weapon_ammo_count = 6
 var meleeAttackReady = true
 var rangedAttackReady = true
 var enemy_in_range = false
+var apply_knockback = false
+var in_knockback_recovery = false
+var knockback_direction = 1
 var in_range_enemies = []
 var health_bar_length
 var collision_area
@@ -78,6 +81,17 @@ func _process(delta):
 		$PlayerAnimatedSprite.play()
 	else:
 		$PlayerAnimatedSprite.stop()
+	
+	if in_knockback_recovery:
+		velocity = Vector2.ZERO
+	
+	#any velocity changes that should not be affected by knockback recovery should go below here
+	
+	if apply_knockback:
+		velocity.x = (625 * knockback_direction)
+		in_knockback_recovery = true
+		$KnockbackRecovery.start()
+	
 	
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, level_size)
@@ -176,3 +190,17 @@ func _on_reload_timer_timeout():
 	
 func _on_game_scene_level_count_changed(count):
 	$HUD/LevelLabel.text = "Levels Completed: " + str(count)
+
+
+func _on_game_scene_player_knockback(direction):
+	apply_knockback = true
+	$KnockbackApplicationTimer.start()
+	knockback_direction = direction
+
+
+func _on_knockback_recovery_timeout():
+	in_knockback_recovery = false
+
+
+func _on_knockback_application_timer_timeout():
+	apply_knockback = false

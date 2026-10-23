@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7brjq"]
-size = Vector2(48, 80)
+size = Vector2(64, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kexd4"]
 radius = 995.0
@@ -30,8 +30,8 @@ script = ExtResource("1_ln3ug")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1949904927]
-position = Vector2(3.8146973e-06, 1.9073486e-06)
-scale = Vector2(1.5, 1.4999999)
+position = Vector2(-4.7683716e-07, 4.7683716e-07)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886231368]

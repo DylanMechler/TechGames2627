@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cp0no8p4onuid" path="res://Entities/Enemies/tscn/basic_enemy.tscn" id="2_0lpq8"]
 [ext_resource type="PackedScene" uid="uid://08v4eh81ktak" path="res://Entities/Enemies/tscn/ranged_enemy.tscn" id="3_3yin6"]
 [ext_resource type="PackedScene" uid="uid://bqpvm7x4thjwi" path="res://Entities/Enemies/tscn/mini_boss_brute.tscn" id="4_1lpnp"]
+[ext_resource type="PackedScene" uid="uid://bi7rrdmknhnqs" path="res://Entities/Enemies/tscn/mini_boss_mercenary.tscn" id="5_ujhjp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qvtxo"]
 texture = ExtResource("1_qvtxo")
@@ -23,6 +24,7 @@ script = ExtResource("1_v7qdr")
 basic_enemy_scene = ExtResource("2_0lpq8")
 ranged_enemy_scene = ExtResource("3_3yin6")
 mini_boss_brute_scene = ExtResource("4_1lpnp")
+mini_boss_mercenary_scene = ExtResource("5_ujhjp")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=654977924]
 position = Vector2(-12, -59)

@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bpb737vrrmc4a" path="res://ArtAssets/alien-idle1.png" id="2_r7rgw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hyy45"]
-size = Vector2(144, 224)
+size = Vector2(144, 184)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7brjq"]
 animations = [{
@@ -18,7 +18,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gk3w"]
-size = Vector2(12.738853, 23.602482)
+size = Vector2(20.382164, 19.875774)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lv08p"]
 radius = 480.0
@@ -30,24 +30,25 @@ radius = 312.10254
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_hyy45")
+metadata/_edit_group_ = true
 
 [node name="AttackArea" type="Area2D" parent="." unique_id=122549937]
-position = Vector2(160, 0)
+position = Vector2(176, -8)
 collision_layer = 0
 collision_mask = 2
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1961158454]
-position = Vector2(-88, 0)
+position = Vector2(-88, 4)
 shape = SubResource("RectangleShape2D_hyy45")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1457198106]
-position = Vector2(-1.9073486e-06, -5.722046e-06)
-scale = Vector2(2.9999998, 2.9999998)
+position = Vector2(0, 9.536743e-07)
+scale = Vector2(2.4999998, 2.5)
 sprite_frames = SubResource("SpriteFrames_7brjq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1622637482]
-position = Vector2(-9.536743e-07, -3.9999986)
+position = Vector2(-1.9073486e-06, 9.536743e-07)
 scale = Vector2(6.28, 6.44)
 shape = SubResource("RectangleShape2D_1gk3w")
 
@@ -74,8 +75,10 @@ visible = false
 shape = SubResource("CircleShape2D_lv08p")
 
 [node name="SlamDamageArea" type="Area2D" parent="." unique_id=1502491145]
+visible = false
 collision_layer = 0
 collision_mask = 2
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlamDamageArea" unique_id=727586563]
 shape = SubResource("CircleShape2D_7brjq")
