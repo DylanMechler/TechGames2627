@@ -153,7 +153,6 @@ func load_next_level():
 
 
 func _on_pause_menu_scene_pause_change(pause_state):
-	print(pause_state)
 	if pause_state:
 		$Player.get_node("HUD").visible = false
 	else:
